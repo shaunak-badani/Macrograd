@@ -1,4 +1,5 @@
 #include "MNISTReader.h"
+#include "IOUtils.h"
 
 MNISTReader::MNISTReader(int batch_size)
 {
@@ -19,7 +20,9 @@ std::vector<std::vector<float>> MNISTReader::readData()
         for(int bufferedIndex = 0 ; bufferedIndex < this->batch_size && myfile.good() ; bufferedIndex++)
         {
             myfile >> currentDataPoint;
-            mnistData.push_back(this->split_comma_separated_string(currentDataPoint));
+            mnistData.push_back(IOUtils::to_float(
+                IOUtils::split_comma_separated_string(currentDataPoint)
+            ));
         }
     }
     return mnistData;

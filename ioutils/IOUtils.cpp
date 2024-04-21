@@ -23,3 +23,16 @@ std::vector<std::string> IOUtils::split_comma_separated_string(std::string strin
 {
     return split_string(stringValue, ',');
 }
+
+std::vector<float> IOUtils::to_float(std::vector<std::string> stringVector)
+{
+    int vectorSize = stringVector.size();
+    std::vector<float> floatVector = std::vector<float>(vectorSize, 0);
+
+    for(int i = 0 ; i < vectorSize ; i++)
+    {
+        floatVector[i] = std::stof(stringVector[i]);
+    }
+    
+    return floatVector;
+}

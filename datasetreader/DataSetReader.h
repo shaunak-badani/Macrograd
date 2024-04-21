@@ -9,10 +9,6 @@ class DataSetReader
     protected:
         int batch_size;
 
-        std::vector<float> split_string(std::string stringValue, char delimiter);
-
-        std::vector<float> split_comma_separated_string(std::string stringValue);
-
     public:
 
         virtual std::vector<std::vector<float>> readData() = 0;
