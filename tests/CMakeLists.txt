@@ -16,7 +16,14 @@ target_link_libraries(${TARGET_NAME} PRIVATE IOUtils GTest::gtest_main GTest::gm
 
 
 target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/ioutils)
-message("target file: ${TARGET_FILE}")
 
 
 add_test(NAME ${TARGET_NAME} COMMAND $<TARGET_FILE:${TARGET_NAME}>)
+
+# MathUtils
+set(BUILDING_BLOCKS_TARGET_NAME BuildingBlocks_test)
+add_executable(${BUILDING_BLOCKS_TARGET_NAME} BuildingBlocksTests.cpp)
+
+target_link_libraries(${BUILDING_BLOCKS_TARGET_NAME} PRIVATE BuildingBlocks GTest::gtest_main GTest::gmock_main)
+target_include_directories(${BUILDING_BLOCKS_TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/buildingblocks)
+add_test(NAME ${BUILDING_BLOCKS_TARGET_NAME} COMMAND $<TARGET_FILE:${BUILDING_BLOCKS_TARGET_NAME}>)

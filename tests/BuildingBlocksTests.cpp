@@ -1,0 +1,150 @@
+#include "Mat.h"
+#include <gtest/gtest.h>
+
+struct NormalBehaviorSetup : public testing::Test
+{
+    svf a;
+    svf b;
+
+    void SetUp() override
+    {
+        a = {
+            {1.0, -1.0, 105.0, 57.0},
+            {2.1, 3.5, 9.0, 77.5},
+            {1.0, -1.0, 105.0, 57.0},
+            {2.1, 3.5, 9.0, 77.6},
+        };
+
+        b = {
+            {9.0, 4.0, -23.2, -57.0},
+            {8.2, -0.9, 2.1, 0.9},
+            {4.3, -12.2, 89.9, 44.2},
+            {8.9, 34.2, 41.7, -99.8}
+        };
+
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+void assertClose(Mat obtainedMat, svf expectedVector)
+{
+    obtainedMat.mapFunction([=](int i, int j, float value) {
+        EXPECT_TRUE((value - expectedVector[i][j]) < 1e-3);
+        return 1.0;
+    });
+}
+
+
+TEST_F(NormalBehaviorSetup, Mat_addition_test)
+{
+    Mat A(a), B(b);
+    Mat C = A + B;
+    svf expectedResultVector = {
+        {10.0, 3.0, 81.8, 0},
+        {10.3, 2.6, 11.1, 78.4},
+        {5.3, -13.2, 194.9, 101.2},
+        {11.0, 37.7, 50.7, -22.2}
+    };
+
+    assertClose(C, expectedResultVector);
+}
+
+TEST_F(NormalBehaviorSetup, Mat_multiplication_test)
+{
+    Mat A(a), B(b);
+    Mat C = A * B;
+    svf expectedResultVector = {
+        {959.6,	673.3,	11791.1, -1105.5},
+	    {776.05, 2545.95,	3999.48, -7453.25},
+	    {959.6,	673.3,	11791.1, -1105.5},
+	    {776.94, 2549.37, 4003.65, -7463.23}
+    };  
+
+    assertClose(C, expectedResultVector);
+}
+
+struct ErrorThrowSetup : public testing::Test
+{
+    svf a;
+    svf b;
+
+    void SetUp() override
+    {
+        a = {
+            {1.0, -1.0, 105.0, 57.0},
+            {2.1, 3.5, 9.0, 77.5},
+        };
+
+        b = {
+            {9.0},
+            {8.2},
+            {4.3}
+        };
+
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+TEST_F(ErrorThrowSetup, ThrowsErrorInBothOperations)
+{
+    Mat A(a);
+    Mat B(b);
+
+    EXPECT_THROW(A + B, std::runtime_error);
+    EXPECT_THROW(A * B, std::runtime_error);
+}
+
+struct PartialBehaviorSetup : public testing::Test
+{
+    svf a;
+    svf b;
+
+    void SetUp() override
+    {
+        a = {
+            {1.0, -1.0, 105.0, 57.0},
+            {2.1, 3.5, 9.0, 77.5},
+        };
+
+        b = {
+            {9.0, 4.0, 5.4},
+            {8.2, -0.9, -76.2},
+            {4.3, -12.2, -35.2},
+            {-11.3, 20.2, 27.2}
+        };
+
+    }
+
+    void TearDown() override
+    {
+    }
+};
+
+TEST_F(PartialBehaviorSetup, ThrowsErrorOnlyForAddition)
+{
+    Mat A(a);
+    Mat B(b);
+
+    EXPECT_THROW(A + B, std::runtime_error);
+
+    svf expectedResultVector = {
+        {-191.8, -124.7, -2064},
+    	{-789.45, 1460.95, 1535.84}  
+    };
+
+    Mat C = A * B;
+    assertClose(C, expectedResultVector);
+}
+
+int main(int argc, char **argv) 
+{
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
+}
