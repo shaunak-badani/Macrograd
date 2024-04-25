@@ -22,7 +22,7 @@ add_test(NAME ${TARGET_NAME} COMMAND $<TARGET_FILE:${TARGET_NAME}>)
 
 # MathUtils
 set(BUILDING_BLOCKS_TARGET_NAME BuildingBlocks_test)
-add_executable(${BUILDING_BLOCKS_TARGET_NAME} BuildingBlocksTests.cpp)
+add_executable(${BUILDING_BLOCKS_TARGET_NAME} BuildingBlocksTests.cpp NodeSanityTest.cpp)
 
 target_link_libraries(${BUILDING_BLOCKS_TARGET_NAME} PRIVATE BuildingBlocks GTest::gtest_main GTest::gmock_main)
 target_include_directories(${BUILDING_BLOCKS_TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/buildingblocks)

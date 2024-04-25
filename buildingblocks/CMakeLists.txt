@@ -1,1 +1,1 @@
-add_library(BuildingBlocks Mat.cpp)
+add_library(BuildingBlocks Mat.cpp Node.cpp)
