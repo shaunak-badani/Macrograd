@@ -16,6 +16,11 @@ class Mat
 
         Mat(svf p);
 
+        // parameterized copy constructor
+        // Will create a matrix of similar size,
+        // and initialize all values to `initialValue`
+        Mat(Mat& originalMat, float initialValue);
+
         Mat operator+(Mat const& b) const;
 
         Mat operator*(Mat const& b) const;

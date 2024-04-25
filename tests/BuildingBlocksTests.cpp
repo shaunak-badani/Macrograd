@@ -32,7 +32,7 @@ struct NormalBehaviorSetup : public testing::Test
 void assertClose(Mat obtainedMat, svf expectedVector)
 {
     obtainedMat.mapFunction([=](int i, int j, float value) {
-        EXPECT_TRUE((value - expectedVector[i][j]) < 1e-3);
+        EXPECT_TRUE(abs(value - expectedVector[i][j]) < 1e-3);
         return 1.0;
     });
 }
@@ -64,6 +64,18 @@ TEST_F(NormalBehaviorSetup, Mat_multiplication_test)
     };  
 
     assertClose(C, expectedResultVector);
+}
+
+TEST_F(NormalBehaviorSetup, Mat_copyconstructor_test)
+{
+    float newValue =  78.23;
+    Mat A(a);
+    Mat B(A, newValue);
+
+    B.mapFunction([=](int i, int j, float value) {
+        EXPECT_EQ(value, newValue);
+        return 1.0;
+    });
 }
 
 struct ErrorThrowSetup : public testing::Test
