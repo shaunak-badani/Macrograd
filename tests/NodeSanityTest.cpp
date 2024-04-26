@@ -54,3 +54,60 @@ TEST(NodeOperations, node_addition)
         return 1.0;
     });
 }
+
+
+TEST(NodeOperations, node_multiplication)
+{
+    svf vectorA = {
+        {-1.0, 2.0, -3.0, 4.0},
+        {1.0, -2, 1, 3},
+        {4, -3, 1, 1}
+    };
+
+    svf vectorB = {
+        {4.0, 2.0},
+        {-1.0, -5.0},  
+        {2.0, 1.0},  
+        {3.0, 1.0},  
+    };
+
+    Mat* a = new Mat(vectorA);
+    Node* nodeA = new Node(a);
+
+    Mat* b = new Mat(vectorB);
+    Node* nodeB = new Node(b);
+
+    Node c = *nodeA * *nodeB;
+    svf randomGradientValue = {
+        {-1, 4},
+        {2, 7},
+        {6, 5}
+    };
+
+    c.grad = new Mat(randomGradientValue);
+
+    c.backward();
+
+    svf expectedGradA = {
+        {4, -19, 2, 1},
+        {22, -37, 11, 13},
+        {34, -31, 17, 23},  
+    };
+
+    svf expectedGradB = {
+        {27,23},
+        {-24,-21},
+        {11,0},
+        {8,42}
+    };
+
+    nodeA->grad->mapFunction([=](int i, int j, float value){
+        EXPECT_TRUE(abs(expectedGradA[i][j] - value) < 1e-3);
+        return 1.0;
+    });
+
+    nodeB->grad->mapFunction([=](int i, int j, float value){
+        EXPECT_TRUE(abs(expectedGradB[i][j] - value) < 1e-3);
+        return 1.0;
+    });
+}

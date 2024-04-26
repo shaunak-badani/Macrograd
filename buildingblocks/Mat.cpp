@@ -91,8 +91,10 @@ Mat Mat::operator*(Mat const& b) const
     {
         throw std::runtime_error("Matrices cannot be multiplied!");
     }
+    svf outputVector = svf(aShape.first, std::vector<float>(bShape.second, 0));
+    Mat output(outputVector);
 
-    return mapFunction([=](int i, int j, float value)
+    return output.mapFunction([=](int i, int j, float value)
     {
         float tmp = 0;
         for(int k = 0 ; k < aShape.second ; k++)

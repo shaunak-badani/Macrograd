@@ -14,6 +14,7 @@ class Node
         Node(Mat* paramData);
 
         Node operator+(Node& b);
+        Node operator*(Node& b);
 
 };
 

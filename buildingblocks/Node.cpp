@@ -22,3 +22,18 @@ Node Node::operator+(Node& b)
     };
     return out;
 }
+
+Node Node::operator*(Node& b)
+{
+    Mat resultMat = *(this->data) * (*(b.data));
+    Node out(new Mat(resultMat));
+    
+    out.backward = [&]()
+    {
+        Mat thisGrad = *(this->grad) + (*(out.grad) * (b.data->T()));
+        Mat bGrad = *(b.grad) + (this->data->T() * *(out.grad));
+        this->grad = new Mat(thisGrad);
+        b.grad = new Mat(bGrad);
+    };
+    return out;
+}
