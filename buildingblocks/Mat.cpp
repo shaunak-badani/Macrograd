@@ -46,6 +46,22 @@ Mat Mat::mapFunction(std::function<float(int, int, float)> apply) const
     return Mat(p);
 }
 
+void Mat::assignValue(float value)
+{
+    std::pair<int, int> shape = this->getShape();
+    int noOfRows = shape.first;
+    int noOfColumns = shape.second;
+
+
+    for(int i = 0 ; i < noOfRows ; i++)
+    {
+        for(int j = 0 ; j < noOfColumns ; j++)
+        {
+            this->piece[i][j] = value;
+        }
+    }
+}
+
 Mat Mat::operator+(Mat const& b) const
 {
     if(this->getShape() != b.getShape())

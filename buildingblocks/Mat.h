@@ -28,6 +28,10 @@ class Mat
         friend std::ostream& operator<<(std::ostream &os, const Mat&a);
 
         Mat mapFunction(std::function<float(int, int, float)> apply) const;
+
+        // assigns the value passed to all elements of the matrix
+        void assignValue(float value);
+
 };
 
 #endif

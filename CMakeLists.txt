@@ -24,4 +24,5 @@ add_test(Test_0, "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME}")
 add_subdirectory(ioutils)
 add_subdirectory(tests)
 add_subdirectory(buildingblocks)
+add_subdirectory(operators)
 

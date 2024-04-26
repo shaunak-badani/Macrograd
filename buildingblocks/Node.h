@@ -13,6 +13,8 @@ class Node
         std::function<void(void)> backward;
         Node(Mat* paramData);
 
+        Node operator+(Node& b);
+
 };
 
 #endif
