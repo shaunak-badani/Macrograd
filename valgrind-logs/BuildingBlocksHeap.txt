@@ -1,0 +1,215 @@
+==57020== Memcheck, a memory error detector
+==57020== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==57020== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==57020== Command: ./BuildingBlocks_test
+==57020== 
+==57020== 
+==57020== HEAP SUMMARY:
+==57020==     in use at exit: 2,368 bytes in 93 blocks
+==57020==   total heap usage: 1,556 allocs, 1,463 frees, 164,969 bytes allocated
+==57020== 
+==57020== 88 (24 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 27 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x127BA3: Node::Node(Mat*) (Node.cpp:7)
+==57020==    by 0x11FF82: NodeOperations_node_addition_Test::TestBody() (NodeSanityTest.cpp:36)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020== 
+==57020== 88 (24 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 28 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x127BA3: Node::Node(Mat*) (Node.cpp:7)
+==57020==    by 0x11FFF6: NodeOperations_node_addition_Test::TestBody() (NodeSanityTest.cpp:39)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020== 
+==57020== 88 (24 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 29 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x127DA6: Node::operator+(Node&) (Node.cpp:14)
+==57020==    by 0x12001A: NodeOperations_node_addition_Test::TestBody() (NodeSanityTest.cpp:41)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020== 
+==57020== 88 (24 direct, 64 indirect) bytes in 1 blocks are definitely lost in loss record 30 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x127BA3: Node::Node(Mat*) (Node.cpp:7)
+==57020==    by 0x127DC9: Node::operator+(Node&) (Node.cpp:14)
+==57020==    by 0x12001A: NodeOperations_node_addition_Test::TestBody() (NodeSanityTest.cpp:41)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020== 
+==57020== 120 (24 direct, 96 indirect) bytes in 1 blocks are definitely lost in loss record 34 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x12812C: Node::operator*(Node&) (Node.cpp:29)
+==57020==    by 0x120DD3: NodeOperations_node_multiplication_Test::TestBody() (NodeSanityTest.cpp:80)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020== 
+==57020== 120 (24 direct, 96 indirect) bytes in 1 blocks are definitely lost in loss record 35 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x127BA3: Node::Node(Mat*) (Node.cpp:7)
+==57020==    by 0x12814F: Node::operator*(Node&) (Node.cpp:29)
+==57020==    by 0x120DD3: NodeOperations_node_multiplication_Test::TestBody() (NodeSanityTest.cpp:80)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020== 
+==57020== 120 (24 direct, 96 indirect) bytes in 1 blocks are definitely lost in loss record 36 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x121032: NodeOperations_node_multiplication_Test::TestBody() (NodeSanityTest.cpp:87)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020==    by 0x118BE5: RUN_ALL_TESTS() (gtest.h:2304)
+==57020== 
+==57020== 144 (24 direct, 120 indirect) bytes in 1 blocks are definitely lost in loss record 37 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x127BA3: Node::Node(Mat*) (Node.cpp:7)
+==57020==    by 0x120D38: NodeOperations_node_multiplication_Test::TestBody() (NodeSanityTest.cpp:75)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020== 
+==57020== 152 (24 direct, 128 indirect) bytes in 1 blocks are definitely lost in loss record 38 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x127BA3: Node::Node(Mat*) (Node.cpp:7)
+==57020==    by 0x120DAC: NodeOperations_node_multiplication_Test::TestBody() (NodeSanityTest.cpp:78)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020== 
+==57020== 224 (48 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 39 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x11F542: NodeSetup_testing_node_sanity_Test::TestBody() (NodeSanityTest.cpp:13)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020==    by 0x118BE5: RUN_ALL_TESTS() (gtest.h:2304)
+==57020== 
+==57020== 224 (48 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 40 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x11FF6D: NodeOperations_node_addition_Test::TestBody() (NodeSanityTest.cpp:36)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020==    by 0x118BE5: RUN_ALL_TESTS() (gtest.h:2304)
+==57020== 
+==57020== 224 (48 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 41 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x11FFE1: NodeOperations_node_addition_Test::TestBody() (NodeSanityTest.cpp:39)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020==    by 0x118BE5: RUN_ALL_TESTS() (gtest.h:2304)
+==57020== 
+==57020== 336 (48 direct, 288 indirect) bytes in 1 blocks are definitely lost in loss record 42 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x120D23: NodeOperations_node_multiplication_Test::TestBody() (NodeSanityTest.cpp:75)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020==    by 0x118BE5: RUN_ALL_TESTS() (gtest.h:2304)
+==57020== 
+==57020== 352 (48 direct, 304 indirect) bytes in 1 blocks are definitely lost in loss record 43 of 44
+==57020==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==57020==    by 0x120D97: NodeOperations_node_multiplication_Test::TestBody() (NodeSanityTest.cpp:78)
+==57020==    by 0x1695B8: void testing::internal::HandleSehExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1616DC: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x13C173: testing::Test::Run() (gtest.cc:2684)
+==57020==    by 0x13CC8E: testing::TestInfo::Run() (gtest.cc:2864)
+==57020==    by 0x13D5CC: testing::TestSuite::Run() (gtest.cc:3023)
+==57020==    by 0x14D97A: testing::internal::UnitTestImpl::RunAllTests() (gtest.cc:5885)
+==57020==    by 0x16AACA: bool testing::internal::HandleSehExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2609)
+==57020==    by 0x1628F8: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (gtest.cc:2645)
+==57020==    by 0x14BF9C: testing::UnitTest::Run() (gtest.cc:5459)
+==57020==    by 0x118BE5: RUN_ALL_TESTS() (gtest.h:2304)
+==57020== 
+==57020== LEAK SUMMARY:
+==57020==    definitely lost: 456 bytes in 14 blocks
+==57020==    indirectly lost: 1,912 bytes in 79 blocks
+==57020==      possibly lost: 0 bytes in 0 blocks
+==57020==    still reachable: 0 bytes in 0 blocks
+==57020==         suppressed: 0 bytes in 0 blocks
+==57020== 
+==57020== For lists of detected and suppressed errors, rerun with: -s
+==57020== ERROR SUMMARY: 14 errors from 14 contexts (suppressed: 0 from 0)
