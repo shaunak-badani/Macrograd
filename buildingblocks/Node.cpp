@@ -11,7 +11,7 @@ Node::Node(Mat* paramData)
 Node Node::operator+(Node& b)
 {
     Mat resultMat = *(this->data) + *(b.data);
-    Node out(new Mat(resultMat));
+    Node out(&resultMat);
     
     out.backward = [&]()
     {
@@ -26,7 +26,7 @@ Node Node::operator+(Node& b)
 Node Node::operator*(Node& b)
 {
     Mat resultMat = *(this->data) * (*(b.data));
-    Node out(new Mat(resultMat));
+    Node out(&resultMat);
     
     out.backward = [&]()
     {
