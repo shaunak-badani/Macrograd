@@ -21,7 +21,6 @@ struct NormalBehaviorSetup : public testing::Test
             {4.3, -12.2, 89.9, 44.2},
             {8.9, 34.2, 41.7, -99.8}
         };
-
     }
 
     void TearDown() override
@@ -49,6 +48,20 @@ TEST_F(NormalBehaviorSetup, Mat_addition_test)
         {11.0, 37.7, 50.7, -22.2}
     };
 
+    assertClose(C, expectedResultVector);
+}
+
+TEST_F(NormalBehaviorSetup, Mat_subtraction_test)
+{
+    Mat A(a), B(b);
+    Mat C = A - B;
+
+    svf expectedResultVector = {
+        {-8.0, -5.0, 128.2, 114.0},
+        {-6.1, 4.4, 6.9, 76.6},
+        {-3.3, 11.2, 15.1, 12.8},
+        {-6.8, -30.7, -32.7, 177.4}
+    };
     assertClose(C, expectedResultVector);
 }
 
@@ -109,6 +122,7 @@ TEST_F(ErrorThrowSetup, ThrowsErrorInBothOperations)
     Mat B(b);
 
     EXPECT_THROW(A + B, std::runtime_error);
+    EXPECT_THROW(A - B, std::runtime_error);
     EXPECT_THROW(A * B, std::runtime_error);
 }
 
@@ -144,6 +158,7 @@ TEST_F(PartialBehaviorSetup, ThrowsErrorOnlyForAddition)
     Mat B(b);
 
     EXPECT_THROW(A + B, std::runtime_error);
+    EXPECT_THROW(A - B, std::runtime_error);
 
     svf expectedResultVector = {
         {-191.8, -124.7, -2064},

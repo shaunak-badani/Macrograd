@@ -72,6 +72,16 @@ Mat Mat::operator+(Mat const& b) const
     return mapFunction([=](int i, int j, float value) { return b.piece[i][j] + value; });
 }
 
+Mat Mat::operator-(Mat const& b) const
+{
+    if(this->getShape() != b.getShape())
+    {
+        throw std::runtime_error("Matrices are not of equal size!");
+    }
+
+    return mapFunction([=](int i, int j, float value) { return value - b.piece[i][j]; });
+}
+
 Mat Mat::operator*(Mat const& b) const
 {
     std::pair<int, int> aShape = this->getShape();

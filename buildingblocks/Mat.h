@@ -23,6 +23,8 @@ class Mat
 
         Mat operator+(Mat const& b) const;
 
+        Mat operator-(Mat const& b) const;
+
         Mat operator*(Mat const& b) const;
 
         friend std::ostream& operator<<(std::ostream &os, const Mat&a);
