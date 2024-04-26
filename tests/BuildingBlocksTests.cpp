@@ -79,6 +79,24 @@ TEST_F(NormalBehaviorSetup, Mat_multiplication_test)
     assertClose(C, expectedResultVector);
 }
 
+TEST_F(NormalBehaviorSetup, Mat_transpose_test)
+{
+    Mat A(a);
+    Mat C = A.T();
+
+    std::pair<int, int> cShape = C.getShape();
+    std::pair<int, int> aShape = A.getShape();
+    
+    EXPECT_EQ(cShape.first, aShape.second);
+    EXPECT_EQ(cShape.second, aShape.first);
+
+    C.mapFunction([=](int i, int j, float value){
+        EXPECT_EQ(value, a[j][i]);
+        return 1.0;
+    });
+
+}
+
 TEST_F(NormalBehaviorSetup, Mat_copyconstructor_test)
 {
     float newValue =  78.23;

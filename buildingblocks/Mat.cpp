@@ -108,3 +108,21 @@ std::ostream& operator<<(std::ostream& os, const Mat& a)
     a.mapFunction([=](int i, int j, float value) { std::cout << a.piece[i][j] << " "; return 1.0; });
     return os;
 }
+
+
+Mat Mat::T()
+{
+    std::pair<int, int> shape = this->getShape();
+    int noOfRows = shape.first;
+    int noOfColumns = shape.second;
+    
+    svf p = svf(noOfColumns, std::vector<float>(noOfRows, 0));
+    for(int i = 0 ; i < noOfRows ; i++)
+    {
+        for(int j = 0 ; j < noOfColumns ; j++)
+        {
+            p[j][i] = this->piece[i][j];
+        }
+    }
+    return Mat(p);
+}

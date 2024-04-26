@@ -31,6 +31,9 @@ class Mat
 
         Mat mapFunction(std::function<float(int, int, float)> apply) const;
 
+        // transpose function
+        Mat T();
+
         // assigns the value passed to all elements of the matrix
         void assignValue(float value);
 
