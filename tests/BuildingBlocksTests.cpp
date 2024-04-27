@@ -30,9 +30,8 @@ struct NormalBehaviorSetup : public testing::Test
 
 void assertClose(Mat obtainedMat, svf expectedVector)
 {
-    obtainedMat.mapFunction([=](int i, int j, float value) {
+    obtainedMat.forEach([=](int i, int j, float value) {
         EXPECT_TRUE(abs(value - expectedVector[i][j]) < 1e-3);
-        return 1.0;
     });
 }
 
@@ -79,6 +78,22 @@ TEST_F(NormalBehaviorSetup, Mat_multiplication_test)
     assertClose(C, expectedResultVector);
 }
 
+TEST_F(NormalBehaviorSetup, Mat_plus_equal_to_test)
+{
+    Mat A(a), B(b);
+    A += B;
+    
+    svf expectedResultVector = {
+        {10.0, 3.0, 81.8, 0},
+        {10.3, 2.6, 11.1, 78.4},
+        {5.3, -13.2, 194.9, 101.2},
+        {11.0, 37.7, 50.7, -22.2}
+    };
+ 
+
+    assertClose(A, expectedResultVector);
+}
+
 TEST_F(NormalBehaviorSetup, Mat_transpose_test)
 {
     Mat A(a);
@@ -90,9 +105,8 @@ TEST_F(NormalBehaviorSetup, Mat_transpose_test)
     EXPECT_EQ(cShape.first, aShape.second);
     EXPECT_EQ(cShape.second, aShape.first);
 
-    C.mapFunction([=](int i, int j, float value){
+    C.forEach([=](int i, int j, float value){
         EXPECT_EQ(value, a[j][i]);
-        return 1.0;
     });
 
 }
@@ -103,9 +117,8 @@ TEST_F(NormalBehaviorSetup, Mat_copyconstructor_test)
     Mat A(a);
     Mat B(A, newValue);
 
-    B.mapFunction([=](int i, int j, float value) {
+    B.forEach([=](int i, int j, float value) {
         EXPECT_EQ(value, newValue);
-        return 1.0;
     });
 }
 

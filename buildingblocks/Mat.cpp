@@ -1,6 +1,7 @@
 #include "Mat.h"
 #include <functional>
 #include <iostream>
+#include <memory>
 
 std::pair<int, int> Mat::getShape() const
 {
@@ -20,7 +21,7 @@ Mat::Mat(svf p) : piece(p)
 
 Mat::Mat(Mat& originalMat, const float initialValue)
 {
-    this->piece = originalMat.mapFunction([=](int i, int j, float k) { return initialValue; }).getPiece();
+    this->piece = (*originalMat.mapFunction([=](int i, int j, float k) { return initialValue; }).get()).getPiece();
 }
 
 svf Mat::getPiece()
@@ -28,7 +29,7 @@ svf Mat::getPiece()
     return this->piece;
 }
 
-Mat Mat::mapFunction(std::function<float(int, int, float)> apply) const
+std::shared_ptr<Mat> Mat::mapFunction(std::function<float(int, int, float)> apply) const
 {
     std::pair<int, int> shape = this->getShape();
     int noOfRows = shape.first;
@@ -43,7 +44,24 @@ Mat Mat::mapFunction(std::function<float(int, int, float)> apply) const
             p[i][j] = apply(i, j, this->piece[i][j]);
         }
     }
-    return Mat(p);
+    return std::make_shared<Mat>(p);
+}
+
+void Mat::forEach(std::function<void(int, int, float)> apply) const
+{
+    std::pair<int, int> shape = this->getShape();
+    int noOfRows = shape.first;
+    int noOfColumns = shape.second;
+
+    svf p = svf(noOfRows, std::vector<float>(noOfColumns, 0));
+
+    for(int i = 0 ; i < noOfRows ; i++)
+    {
+        for(int j = 0 ; j < noOfColumns ; j++)
+        {
+            apply(i, j, this->piece[i][j]);
+        }
+    }
 }
 
 void Mat::assignValue(float value)
@@ -69,7 +87,7 @@ Mat Mat::operator+(Mat const& b) const
         throw std::runtime_error("Matrices are not of equal size!");
     }
 
-    return mapFunction([=](int i, int j, float value) { return b.piece[i][j] + value; });
+    return *mapFunction([=](int i, int j, float value) { return b.piece[i][j] + value; }).get();
 }
 
 Mat Mat::operator-(Mat const& b) const
@@ -79,7 +97,7 @@ Mat Mat::operator-(Mat const& b) const
         throw std::runtime_error("Matrices are not of equal size!");
     }
 
-    return mapFunction([=](int i, int j, float value) { return value - b.piece[i][j]; });
+    return *mapFunction([=](int i, int j, float value) { return value - b.piece[i][j]; }).get();
 }
 
 Mat Mat::operator*(Mat const& b) const
@@ -94,7 +112,7 @@ Mat Mat::operator*(Mat const& b) const
     svf outputVector = svf(aShape.first, std::vector<float>(bShape.second, 0));
     Mat output(outputVector);
 
-    return output.mapFunction([=](int i, int j, float value)
+    return *output.mapFunction([=](int i, int j, float value)
     {
         float tmp = 0;
         for(int k = 0 ; k < aShape.second ; k++)
@@ -102,12 +120,20 @@ Mat Mat::operator*(Mat const& b) const
             tmp += this->piece[i][k] * b.piece[k][j];
         }
         return tmp;
+    }).get();
+}
+
+void Mat::operator+=(Mat const& b) 
+{
+    this->forEach([=](int i, int j, float value)
+    {
+        this->piece[i][j] += b.piece[i][j];
     });
 }
 
 std::ostream& operator<<(std::ostream& os, const Mat& a)
 {
-    a.mapFunction([=](int i, int j, float value) { std::cout << a.piece[i][j] << " "; return 1.0; });
+    a.forEach([=](int i, int j, float value) { std::cout << a.piece[i][j] << " "; });
     return os;
 }
 

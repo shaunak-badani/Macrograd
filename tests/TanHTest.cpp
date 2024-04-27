@@ -12,19 +12,18 @@ TEST(TanH, tanh)
         {3.0, 4.0}
     };
 
-    Mat a(p);
-    Node* input = new Node(&a);
-    Operator* tanh = new TanH();
-    Node* y = tanh->operate(input);
+    std::shared_ptr<Mat> a = std::make_shared<Mat>(p);
+    std::shared_ptr<Node> input = std::make_shared<Node>(a);
+    std::shared_ptr<Operator> tanh = std::make_shared<TanH>();
+    std::shared_ptr<Node> y = tanh.get()->operate(input);
 
     svf expectedOutput = {
         {0.76159, 0.96402},
         {0.99505, 0.9993292}
     };
 
-    y->data->mapFunction([=](int i, int j, float value){
+    y->data->forEach([=](int i, int j, float value){
         EXPECT_TRUE(abs(expectedOutput[i][j] - value) < 1e-4);
-        return 1.0;
     }); 
 
     y->grad->assignValue(1.0);
@@ -36,12 +35,9 @@ TEST(TanH, tanh)
         {0.009866038, 0.00134095}
     };
 
-    input->grad->mapFunction([=](int i, int j, float value){
+    input->grad->forEach([=](int i, int j, float value){
         EXPECT_TRUE(abs(expectedGrad[i][j] - value) < 1e-3);
-        return 1.0;
     });
-
-
 }
 
 int main(int argc, char **argv) 
@@ -50,5 +46,3 @@ int main(int argc, char **argv)
 
     return RUN_ALL_TESTS();
 }
-
-
