@@ -3,9 +3,10 @@
 #include "Operator.h"
 #include "Node.h"
 #include <gtest/gtest.h>
+#include "Pow.h"
 
 
-TEST(TanH, tanh)
+TEST(OperatorsTest, TanH)
 {
     svf p = {
         {1.0, 2.0},
@@ -34,6 +35,43 @@ TEST(TanH, tanh)
         {0.419974376, 0.070650825},
         {0.009866038, 0.00134095}
     };
+
+    input->grad->forEach([=](int i, int j, float value){
+        EXPECT_TRUE(abs(expectedGrad[i][j] - value) < 1e-3);
+    });
+}
+
+TEST(OperatorsTest, Pow)
+{
+    svf p = {
+        {-2.0, 2.0},
+        {3.0, 4.0}
+    };
+    int exponent = 3;
+
+    std::shared_ptr<Mat> a = std::make_shared<Mat>(p);
+    std::shared_ptr<Node> input = std::make_shared<Node>(a);
+    std::shared_ptr<Operator> pow = std::make_shared<Pow>(exponent);
+    std::shared_ptr<Node> y = pow.get()->operate(input);
+    
+    svf expectedOutput = {
+        {-8, 8},
+        {27, 64}
+    };
+
+    y->data->forEach([=](int i, int j, float value){
+        EXPECT_TRUE(abs(expectedOutput[i][j] - value) < 1e-4);
+    }); 
+
+    y->grad->assignValue(1.0);
+
+    y->backward();
+
+    svf expectedGrad = {
+        {12.0, 12.0},
+        {27.0, 48.0}
+    };
+
 
     input->grad->forEach([=](int i, int j, float value){
         EXPECT_TRUE(abs(expectedGrad[i][j] - value) < 1e-3);

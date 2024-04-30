@@ -1,4 +1,4 @@
-add_library(Operators Operator.cpp TanH.cpp)
+add_library(Operators Operator.cpp TanH.cpp Pow.cpp)
 
 
 target_link_libraries(Operators PRIVATE BuildingBlocks)

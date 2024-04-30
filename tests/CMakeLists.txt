@@ -34,7 +34,7 @@ add_test(NAME ${BUILDING_BLOCKS_TARGET_NAME} COMMAND $<TARGET_FILE:${BUILDING_BL
 # OperatorTests
 set(OPERATORS_TARGET_NAME Operators_test)
 
-add_executable(${OPERATORS_TARGET_NAME} TanHTest.cpp)
+add_executable(${OPERATORS_TARGET_NAME} OperatorsTest.cpp)
 target_link_libraries(${OPERATORS_TARGET_NAME} PRIVATE Operators BuildingBlocks GTest::gtest_main GTest::gmock_main)
 target_include_directories(${OPERATORS_TARGET_NAME} 
       PUBLIC 
