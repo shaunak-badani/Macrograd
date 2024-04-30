@@ -17,7 +17,7 @@ class Operator
         virtual std::shared_ptr<Mat> gradient(std::shared_ptr<Node> operand, std::shared_ptr<Node> out) = 0;
 
         // a function that propagates the gradient to 
-        void propagateGradientBackward(std::shared_ptr<Node> operand, std::shared_ptr<Node> out);
+        void propagateGradientBackward(std::weak_ptr<Node> operand, std::weak_ptr<Node> out);
 
         std::shared_ptr<Node> operate(std::shared_ptr<Node> a);
 };
