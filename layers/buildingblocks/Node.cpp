@@ -39,3 +39,20 @@ std::shared_ptr<Node> Node::operator*(Node& b)
     };
     return out;
 }
+
+std::shared_ptr<Node> Node::operator-(Node& b)
+{
+    Mat resultMat = *(this->data) - *(b.data);
+    std::shared_ptr<Node> out = std::make_shared<Node>(std::make_shared<Mat>(resultMat));
+    
+    out->backward = [&]()
+    {
+        std::shared_ptr<Mat> thisGrad = std::make_shared<Mat>(*(out->grad));
+        std::shared_ptr<Mat> bGrad = std::make_shared<Mat>(out->grad->mapFunction([=](int i, int j, float value) {
+            return -1 * value;
+        })->getPiece());
+        b.grad = bGrad;
+        this->grad = thisGrad;
+    };
+    return out;
+}

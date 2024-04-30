@@ -38,6 +38,49 @@ TEST(NodeOperations, node_addition)
     std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
     std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
 
+    std::shared_ptr<Node> c = *(nodeA.get()) - *(nodeB.get());
+
+    svf expectedSubtractedVector = {
+        {-1.0, 0.0},
+        {1.7, -1.1}  
+    };
+
+    c->data->forEach([=](int i, int j, float value){
+        EXPECT_TRUE(abs(expectedSubtractedVector[i][j] - value) < 1e-3);
+    });
+
+    float randomGradientValue = 57.0;
+    c->grad->assignValue(randomGradientValue);
+
+    c->backward();
+
+    nodeB->grad->forEach([=](int i, int j, float value){
+        EXPECT_EQ(value, -1 * randomGradientValue);
+    });
+
+    nodeA->grad->forEach([=](int i, int j, float value){
+        EXPECT_EQ(value, randomGradientValue);
+    });
+}
+
+TEST(NodeOperations, node_subtraction)
+{
+    svf vectorA = {
+        {1.0, -9.0},
+        {9.8, 2.1}
+    };
+
+    svf vectorB = {
+        {2.0, -9.0},
+        {8.1, 3.2}  
+    };
+
+    std::shared_ptr<Mat> a = std::make_shared<Mat>(vectorA);
+    std::shared_ptr<Node> nodeA = std::make_shared<Node>(a);
+
+    std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
+    std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
+
     std::shared_ptr<Node> c = *(nodeA.get()) + *(nodeB.get());
 
     float randomGradientValue = 57.0;
