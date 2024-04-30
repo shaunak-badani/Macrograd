@@ -56,3 +56,26 @@ std::shared_ptr<Node> Node::operator-(Node& b)
     };
     return out;
 }
+
+std::shared_ptr<Node> Node::sum()
+{
+    float totalSum = 0.0;
+
+    this->data->forEach([&totalSum](int i, int j, float value){ totalSum += value; });
+
+    svf sumValue = {{totalSum}};
+
+    std::shared_ptr<Node> out = std::make_shared<Node>(
+        std::make_shared<Mat>(sumValue)
+    );
+
+    out->backward = [&]()
+    {
+        float gradientToPropagate = out->grad->getPiece()[0][0];
+        svf grad = this->grad->getPiece();
+        this->grad->forEach([&](int i, int j, float value){
+            grad[i][j] += gradientToPropagate;
+        });
+    };
+    return out;
+}

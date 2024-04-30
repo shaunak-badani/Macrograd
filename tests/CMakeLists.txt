@@ -34,8 +34,6 @@ add_test(NAME ${BUILDING_BLOCKS_TARGET_NAME} COMMAND $<TARGET_FILE:${BUILDING_BL
 # OperatorTests
 set(OPERATORS_TARGET_NAME Operators_test)
 
-message("${PROJECT_SOURCE_DIR}")
-
 add_executable(${OPERATORS_TARGET_NAME} OperatorsTest.cpp)
 target_link_libraries(${OPERATORS_TARGET_NAME} PRIVATE Operators BuildingBlocks GTest::gtest_main GTest::gmock_main)
 target_include_directories(${OPERATORS_TARGET_NAME} 
@@ -45,3 +43,18 @@ target_include_directories(${OPERATORS_TARGET_NAME}
 
 add_test(NAME ${OPERATORS_TARGET_NAME} COMMAND $<TARGET_FILE:${OPERATORS_TARGET_NAME}>)
 
+# LossFn Tests
+
+set(LOSS_FN_TARGET_NAME LossFns_test)
+
+add_executable(${LOSS_FN_TARGET_NAME} LossFnsTest.cpp)
+target_link_libraries(${LOSS_FN_TARGET_NAME} PRIVATE LossFns GTest::gtest_main GTest::gmock_main)
+
+target_include_directories(${LOSS_FN_TARGET_NAME} 
+      PUBLIC 
+      ${PROJECT_SOURCE_DIR}/layers/buildingblocks
+      ${PROJECT_SOURCE_DIR}/layers/operators
+      ${PROJECT_SOURCE_DIR}/layers/lossfns
+      )
+
+add_test(NAME ${LOSS_FN_TARGET_NAME} COMMAND $<TARGET_FILE:${LOSS_FN_TARGET_NAME}>)

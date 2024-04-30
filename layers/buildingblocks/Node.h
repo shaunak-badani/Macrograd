@@ -17,6 +17,7 @@ class Node
         std::shared_ptr<Node> operator+(Node& b);
         std::shared_ptr<Node> operator*(Node& b);
         std::shared_ptr<Node> operator-(Node& b);
+        std::shared_ptr<Node> sum();
 
 };
 

@@ -6,7 +6,7 @@ add_library(${TARGET_NAME} Layer.cpp)
 
 add_subdirectory(buildingblocks)
 add_subdirectory(operators)
-# add_subdirectory(lossfn)
+add_subdirectory(lossfns)
 
 target_link_libraries(${TARGET_NAME} PRIVATE BuildingBlocks Operators)
 target_include_directories(${TARGET_NAME} PUBLIC 

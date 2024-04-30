@@ -11,6 +11,6 @@ class MeanSquaredError : public LossFn
     public:
         MeanSquaredError();
 
-        std::shared_ptr<Mat> operator()(std::shared_ptr<Node> actualValues, 
+        std::shared_ptr<Node> operator()(std::shared_ptr<Node> actualValues, 
                 std::shared_ptr<Node> expectedValues) override;
 };
