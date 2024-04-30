@@ -23,6 +23,4 @@ enable_testing()
 # Adding test folders:
 add_subdirectory(ioutils)
 add_subdirectory(tests)
-add_subdirectory(buildingblocks)
-add_subdirectory(operators)
 add_subdirectory(layers)

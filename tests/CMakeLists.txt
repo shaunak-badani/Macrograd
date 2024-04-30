@@ -27,19 +27,21 @@ add_executable(${BUILDING_BLOCKS_TARGET_NAME}
     NodeSanityTest.cpp)
 
 target_link_libraries(${BUILDING_BLOCKS_TARGET_NAME} PRIVATE BuildingBlocks GTest::gtest_main GTest::gmock_main)
-target_include_directories(${BUILDING_BLOCKS_TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/buildingblocks)
+target_include_directories(${BUILDING_BLOCKS_TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/layers/buildingblocks)
 add_test(NAME ${BUILDING_BLOCKS_TARGET_NAME} COMMAND $<TARGET_FILE:${BUILDING_BLOCKS_TARGET_NAME}>)
 
 
 # OperatorTests
 set(OPERATORS_TARGET_NAME Operators_test)
 
+message("${PROJECT_SOURCE_DIR}")
+
 add_executable(${OPERATORS_TARGET_NAME} OperatorsTest.cpp)
 target_link_libraries(${OPERATORS_TARGET_NAME} PRIVATE Operators BuildingBlocks GTest::gtest_main GTest::gmock_main)
 target_include_directories(${OPERATORS_TARGET_NAME} 
       PUBLIC 
-      ${PROJECT_SOURCE_DIR}/buildingblocks
-      ${PROJECT_SOURCE_DIR}/operators)
+      ${PROJECT_SOURCE_DIR}/layers/buildingblocks
+      ${PROJECT_SOURCE_DIR}/layers/operators)
 
 add_test(NAME ${OPERATORS_TARGET_NAME} COMMAND $<TARGET_FILE:${OPERATORS_TARGET_NAME}>)
 
