@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <memory>
 typedef std::vector<std::vector<float>> svf;
 
 
@@ -27,9 +28,13 @@ class Mat
 
         Mat operator*(Mat const& b) const;
 
+        void operator+=(Mat const& b);
+
         friend std::ostream& operator<<(std::ostream &os, const Mat&a);
 
-        Mat mapFunction(std::function<float(int, int, float)> apply) const;
+        std::shared_ptr<Mat> mapFunction(std::function<float(int, int, float)> apply) const;
+
+        void forEach(std::function<void(int, int, float)> apply) const;
 
         // transpose function
         Mat T();
