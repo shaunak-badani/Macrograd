@@ -38,12 +38,12 @@ TEST(NodeOperations, node_addition)
     std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
     std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
 
-    Node c = *(nodeA.get()) + *(nodeB.get());
+    std::shared_ptr<Node> c = *(nodeA.get()) + *(nodeB.get());
 
     float randomGradientValue = 57.0;
-    c.grad->assignValue(randomGradientValue);
+    c->grad->assignValue(randomGradientValue);
 
-    c.backward();
+    c->backward();
 
     nodeB->grad->forEach([=](int i, int j, float value){
         EXPECT_EQ(value, randomGradientValue);
@@ -76,16 +76,16 @@ TEST(NodeOperations, node_multiplication)
     std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
     std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
 
-    Node c = *nodeA * *nodeB;
+    std::shared_ptr<Node> c = *nodeA * *nodeB;
     svf randomGradientValue = {
         {-1, 4},
         {2, 7},
         {6, 5}
     };
 
-    c.grad = std::make_shared<Mat>(randomGradientValue);
+    c->grad = std::make_shared<Mat>(randomGradientValue);
 
-    c.backward();
+    c->backward();
 
     svf expectedGradA = {
         {4, -19, 2, 1},

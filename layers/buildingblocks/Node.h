@@ -14,8 +14,8 @@ class Node
         std::function<void(void)> backward;
         Node(std::shared_ptr<Mat> paramData);
 
-        Node operator+(Node& b);
-        Node operator*(Node& b);
+        std::shared_ptr<Node> operator+(Node& b);
+        std::shared_ptr<Node> operator*(Node& b);
 
 };
 
