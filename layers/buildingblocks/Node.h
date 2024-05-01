@@ -17,7 +17,7 @@ class Node
         Node(std::shared_ptr<Mat> paramData);
         Node(std::shared_ptr<Mat> paramData, std::unordered_set<std::shared_ptr<Node>> previous);
 
-        std::shared_ptr<Node> operator+(Node& b);
+        friend std::shared_ptr<Node> operator+(std::shared_ptr<Node> a, std::shared_ptr<Node> b);
         std::shared_ptr<Node> operator*(Node& b);
         std::shared_ptr<Node> operator-(Node& b);
         std::shared_ptr<Node> sum();
