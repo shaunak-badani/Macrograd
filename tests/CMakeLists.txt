@@ -55,6 +55,7 @@ target_include_directories(${LOSS_FN_TARGET_NAME}
       ${PROJECT_SOURCE_DIR}/layers/buildingblocks
       ${PROJECT_SOURCE_DIR}/layers/operators
       ${PROJECT_SOURCE_DIR}/layers/lossfns
+      ${PROJECT_SOURCE_DIR}/layers
       )
 
 add_test(NAME ${LOSS_FN_TARGET_NAME} COMMAND $<TARGET_FILE:${LOSS_FN_TARGET_NAME}>)

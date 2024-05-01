@@ -3,6 +3,7 @@
 #include "MeanSquaredError.h"
 #include "Node.h"
 #include "Mat.h"
+#include "LayerUtils.h"
 
 TEST(LossFn, MeanSquaredError)
 {
