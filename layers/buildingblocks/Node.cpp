@@ -123,24 +123,35 @@ std::shared_ptr<Node> operator*(std::shared_ptr<Node> nodeA, std::shared_ptr<Nod
     return out;
 }
 
-std::shared_ptr<Node> Node::sum()
+std::shared_ptr<Node> sum(std::shared_ptr<Node> nodeA)
 {
     float totalSum = 0.0;
 
-    this->data->forEach([&totalSum](int i, int j, float value){ totalSum += value; });
+    nodeA->data->forEach([&totalSum](int i, int j, float value){ totalSum += value; });
 
     svf sumValue = {{totalSum}};
 
     std::shared_ptr<Node> out = std::make_shared<Node>(
         std::make_shared<Mat>(sumValue), 
-        std::unordered_set<std::shared_ptr<Node>>({std::make_shared<Node>(*this)})
+        std::unordered_set<std::shared_ptr<Node>>({nodeA})
     );
+
+    std::weak_ptr<Node> weakA(nodeA);
+    std::weak_ptr<Node> weakOut(out);
 
     out->backward = [&]()
     {
+         std::shared_ptr<Node> nA = weakA.lock();
+        if(!nA)
+            throw std::runtime_error("Can't get lock to pointer of A in sum operator!");
+
+        std::shared_ptr<Node> nOut = weakOut.lock();
+        if(!nOut)
+            throw std::runtime_error("Can't get lock to pointer of out in sum operator!");
+
         float gradientToPropagate = out->grad->getPiece()[0][0];
-        svf grad = this->grad->getPiece();
-        this->grad->forEach([&](int i, int j, float value){
+        svf grad = nA->grad->getPiece();
+        nA->grad->forEach([&](int i, int j, float value){
             grad[i][j] += gradientToPropagate;
         });
     };
