@@ -132,7 +132,6 @@ TEST(NodeOperations, node_multiplication)
 
     EXPECT_EQ(c->previous.size(), 2) << "The multiplication operator should have two children, one for each operand" << std::endl;
 
-
     c->grad = std::make_shared<Mat>(randomGradientValue);
 
     c->backward();

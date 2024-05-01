@@ -9,6 +9,7 @@ Node::Node(std::shared_ptr<Mat> paramData, std::unordered_set<std::shared_ptr<No
     this->data = paramData;
     this->grad = std::make_shared<Mat>(*(paramData.get()), 0.0);
     this->previous = previous;
+    this->selfPtr = std::make_shared<Node>(*this);
 }
 
 Node::Node(std::shared_ptr<Mat> paramData) : Node(paramData, std::unordered_set<std::shared_ptr<Node>>()) 
@@ -24,8 +25,8 @@ std::shared_ptr<Node> Node::operator+(Node& b)
     Mat resultMat = *(this->data) + *(b.data);
     std::shared_ptr<Node> out = std::make_shared<Node>(std::make_shared<Mat>(resultMat),
         std::unordered_set<std::shared_ptr<Node>>({
-            std::make_shared<Node>(b), 
-            std::make_shared<Node>(*this)
+            b.selfPtr, 
+            this->selfPtr
         }));
     
     out->backward = [&]()
@@ -41,8 +42,8 @@ std::shared_ptr<Node> Node::operator*(Node& b)
     Mat resultMat = *(this->data) * (*(b.data));
     std::shared_ptr<Node> out = std::make_shared<Node>(std::make_shared<Mat>(resultMat),
         std::unordered_set<std::shared_ptr<Node>>({
-            std::make_shared<Node>(b), 
-            std::make_shared<Node>(*this)
+            b.selfPtr, 
+            this->selfPtr
         }));
     
     out->backward = [&]()
@@ -58,8 +59,8 @@ std::shared_ptr<Node> Node::operator-(Node& b)
     Mat resultMat = *(this->data) - *(b.data);
     std::shared_ptr<Node> out = std::make_shared<Node>(std::make_shared<Mat>(resultMat), 
         std::unordered_set<std::shared_ptr<Node>>({
-            std::make_shared<Node>(b), 
-            std::make_shared<Node>(*this)
+            b.selfPtr, 
+            this->selfPtr
         }));
     
     out->backward = [&]()
@@ -84,7 +85,7 @@ std::shared_ptr<Node> Node::sum()
 
     std::shared_ptr<Node> out = std::make_shared<Node>(
         std::make_shared<Mat>(sumValue), 
-        std::unordered_set<std::shared_ptr<Node>>({std::make_shared<Node>(*this)})
+        std::unordered_set<std::shared_ptr<Node>>({this->selfPtr})
     );
 
     out->backward = [&]()
