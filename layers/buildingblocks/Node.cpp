@@ -83,7 +83,8 @@ std::shared_ptr<Node> Node::sum()
     svf sumValue = {{totalSum}};
 
     std::shared_ptr<Node> out = std::make_shared<Node>(
-        std::make_shared<Mat>(sumValue)
+        std::make_shared<Mat>(sumValue), 
+        std::unordered_set<std::shared_ptr<Node>>({std::make_shared<Node>(*this)})
     );
 
     out->backward = [&]()
