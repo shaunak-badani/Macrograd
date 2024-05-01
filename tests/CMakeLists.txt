@@ -48,7 +48,7 @@ add_test(NAME ${OPERATORS_TARGET_NAME} COMMAND $<TARGET_FILE:${OPERATORS_TARGET_
 set(LOSS_FN_TARGET_NAME LossFns_test)
 
 add_executable(${LOSS_FN_TARGET_NAME} LossFnsTest.cpp)
-target_link_libraries(${LOSS_FN_TARGET_NAME} PRIVATE LossFns GTest::gtest_main GTest::gmock_main)
+target_link_libraries(${LOSS_FN_TARGET_NAME} PRIVATE LossFns Layers GTest::gtest_main GTest::gmock_main)
 
 target_include_directories(${LOSS_FN_TARGET_NAME} 
       PUBLIC 
