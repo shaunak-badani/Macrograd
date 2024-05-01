@@ -52,6 +52,44 @@ std::shared_ptr<Node> operator+(std::shared_ptr<Node> nodeA, std::shared_ptr<Nod
     return out;
 }
 
+std::shared_ptr<Node> operator-(std::shared_ptr<Node> nodeA, std::shared_ptr<Node> nodeB)
+{
+    Mat resultMat = *(nodeA->data.get()) - *(nodeB->data.get());
+    std::shared_ptr<Node> out = std::make_shared<Node>(std::make_shared<Mat>(resultMat), 
+        std::unordered_set<std::shared_ptr<Node>>({
+            nodeA,
+            nodeB
+        }));
+
+    std::weak_ptr<Node> weakA(nodeA);
+    std::weak_ptr<Node> weakB(nodeB);
+    std::weak_ptr<Node> weakOut(out);
+    
+    out->backward = [weakA, weakB, weakOut]()
+    {
+        std::shared_ptr<Node> nA = weakA.lock();
+        if(!nA)
+            throw std::runtime_error("Can't get lock to pointer of A in subtraction operator!");
+
+        std::shared_ptr<Node> nB = weakB.lock();
+        if(!nB)
+            throw std::runtime_error("Can't get lock to pointer of B in subtraction operator!");
+
+        std::shared_ptr<Node> nOut = weakOut.lock();
+        if(!nOut)
+            throw std::runtime_error("Can't get lock to pointer of Out in subtraction operator!");
+
+        std::shared_ptr<Mat> aGrad = std::make_shared<Mat>(*(nOut->grad.get()));
+        std::shared_ptr<Mat> bGrad = std::make_shared<Mat>(nOut->grad->mapFunction([=](int i, int j, float value) {
+            return -1 * value;
+        })->getPiece());
+
+        nB->grad = bGrad;
+        nA->grad = aGrad;
+    };
+    return out;
+}
+
 std::shared_ptr<Node> Node::operator*(Node& b)
 {
     Mat resultMat = *(this->data) * (*(b.data));
@@ -65,27 +103,6 @@ std::shared_ptr<Node> Node::operator*(Node& b)
     {
         *(this->grad.get()) += (*(out->grad) * (b.data->T()));
         *(b.grad.get()) += (this->data->T() * *(out->grad));
-    };
-    return out;
-}
-
-std::shared_ptr<Node> Node::operator-(Node& b)
-{
-    Mat resultMat = *(this->data) - *(b.data);
-    std::shared_ptr<Node> out = std::make_shared<Node>(std::make_shared<Mat>(resultMat), 
-        std::unordered_set<std::shared_ptr<Node>>({
-            std::make_shared<Node>(b), 
-            std::make_shared<Node>(*this)
-        }));
-    
-    out->backward = [&]()
-    {
-        std::shared_ptr<Mat> thisGrad = std::make_shared<Mat>(*(out->grad));
-        std::shared_ptr<Mat> bGrad = std::make_shared<Mat>(out->grad->mapFunction([=](int i, int j, float value) {
-            return -1 * value;
-        })->getPiece());
-        b.grad = bGrad;
-        this->grad = thisGrad;
     };
     return out;
 }

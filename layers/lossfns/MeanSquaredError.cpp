@@ -13,5 +13,5 @@ MeanSquaredError::MeanSquaredError()
 std::shared_ptr<Node> MeanSquaredError::operator()(std::shared_ptr<Node> actualValues, 
         std::shared_ptr<Node> expectedValues)
 {
-    return this->powerOperator->operate(*(actualValues.get()) - *(expectedValues.get()))->sum();
+    return this->powerOperator->operate(actualValues - expectedValues)->sum();
 }

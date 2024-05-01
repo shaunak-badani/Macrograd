@@ -20,6 +20,42 @@ TEST(NodeSetup, testing_node_sanity)
     });
 }
 
+TEST(NodeOperations, node_addition)
+{
+    svf vectorA = {
+        {1.0, -9.0},
+        {9.8, 2.1}
+    };
+
+    svf vectorB = {
+        {2.0, -9.0},
+        {8.1, 3.2}  
+    };
+
+    std::shared_ptr<Mat> a = std::make_shared<Mat>(vectorA);
+    std::shared_ptr<Node> nodeA = std::make_shared<Node>(a);
+
+    std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
+    std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
+
+    std::shared_ptr<Node> c = nodeA + nodeB;
+
+    EXPECT_EQ(c->previous.size(), 2) << "The addition operator should have two children, one for each operand" << std::endl;
+
+    float randomGradientValue = 57.0;
+    c->grad->assignValue(randomGradientValue);
+
+    c->backward();
+
+    // nodeB->grad->forEach([=](int i, int j, float value){
+    //     EXPECT_EQ(value, randomGradientValue);
+    // });
+
+    // nodeA->grad->forEach([=](int i, int j, float value){
+    //     EXPECT_EQ(value, randomGradientValue);
+    // });
+}
+
 TEST(NodeOperations, node_subtraction)
 {
     svf vectorA = {
@@ -38,7 +74,7 @@ TEST(NodeOperations, node_subtraction)
     std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
     std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
 
-    std::shared_ptr<Node> c = *(nodeA.get()) - *(nodeB.get());
+    std::shared_ptr<Node> c = nodeA - nodeB;
 
     EXPECT_EQ(c->previous.size(), 2) << "The subtraction operator should have two children, one for each operand" << std::endl;
 
@@ -63,43 +99,6 @@ TEST(NodeOperations, node_subtraction)
     nodeA->grad->forEach([=](int i, int j, float value){
         EXPECT_EQ(value, randomGradientValue);
     });
-}
-
-TEST(NodeOperations, node_addition)
-{
-    svf vectorA = {
-        {1.0, -9.0},
-        {9.8, 2.1}
-    };
-
-    svf vectorB = {
-        {2.0, -9.0},
-        {8.1, 3.2}  
-    };
-
-    std::shared_ptr<Mat> a = std::make_shared<Mat>(vectorA);
-    std::shared_ptr<Node> nodeA = std::make_shared<Node>(a);
-
-    std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
-    std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
-
-    std::shared_ptr<Node> c = nodeA + nodeB;
-
-
-    EXPECT_EQ(c->previous.size(), 2) << "The addition operator should have two children, one for each operand" << std::endl;
-
-    float randomGradientValue = 57.0;
-    c->grad->assignValue(randomGradientValue);
-
-    c->backward();
-
-    // nodeB->grad->forEach([=](int i, int j, float value){
-    //     EXPECT_EQ(value, randomGradientValue);
-    // });
-
-    // nodeA->grad->forEach([=](int i, int j, float value){
-    //     EXPECT_EQ(value, randomGradientValue);
-    // });
 }
 
 
