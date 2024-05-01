@@ -10,7 +10,6 @@
 class Node
 {
     public:
-        std::shared_ptr<Node> selfPtr;
         std::unordered_set<std::shared_ptr<Node>> previous;
         std::shared_ptr<Mat> data;
         std::shared_ptr<Mat> grad;
