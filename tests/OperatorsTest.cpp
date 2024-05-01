@@ -23,6 +23,9 @@ TEST(OperatorsTest, TanH)
         {0.99505, 0.9993292}
     };
 
+    EXPECT_EQ(y->previous.size(), 1) << "The unary operator tanh should have 1 child" << std::endl;
+
+
     y->data->forEach([=](int i, int j, float value){
         EXPECT_TRUE(abs(expectedOutput[i][j] - value) < 1e-4);
     }); 
@@ -53,6 +56,8 @@ TEST(OperatorsTest, Pow)
     std::shared_ptr<Node> input = std::make_shared<Node>(a);
     std::shared_ptr<Operator> pow = std::make_shared<Pow>(exponent);
     std::shared_ptr<Node> y = pow.get()->operate(input);
+
+    EXPECT_EQ(y->previous.size(), 1) << "The unary operator pow should have 1 child" << std::endl;
     
     svf expectedOutput = {
         {-8, 8},

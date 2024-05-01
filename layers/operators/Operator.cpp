@@ -21,7 +21,8 @@ void Operator::propagateGradientBackward(std::weak_ptr<Node> operand, std::weak_
 
 std::shared_ptr<Node> Operator::operate(std::shared_ptr<Node> a)
 {
-    std::shared_ptr<Node> out = std::make_shared<Node>(calculate(a->data));
+    std::shared_ptr<Node> out = std::make_shared<Node>(calculate(a->data),
+        std::unordered_set<std::shared_ptr<Node>>({a}));
 
     // creating weak pointers in order to prevent memory leaks;
     std::weak_ptr<Node> weakA(a);

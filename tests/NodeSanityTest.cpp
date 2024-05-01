@@ -20,7 +20,7 @@ TEST(NodeSetup, testing_node_sanity)
     });
 }
 
-TEST(NodeOperations, node_addition)
+TEST(NodeOperations, node_subtraction)
 {
     svf vectorA = {
         {1.0, -9.0},
@@ -39,6 +39,8 @@ TEST(NodeOperations, node_addition)
     std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
 
     std::shared_ptr<Node> c = *(nodeA.get()) - *(nodeB.get());
+
+    EXPECT_EQ(c->previous.size(), 2) << "The subtraction operator should have two children, one for each operand" << std::endl;
 
     svf expectedSubtractedVector = {
         {-1.0, 0.0},
@@ -63,7 +65,7 @@ TEST(NodeOperations, node_addition)
     });
 }
 
-TEST(NodeOperations, node_subtraction)
+TEST(NodeOperations, node_addition)
 {
     svf vectorA = {
         {1.0, -9.0},
@@ -82,6 +84,8 @@ TEST(NodeOperations, node_subtraction)
     std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
 
     std::shared_ptr<Node> c = *(nodeA.get()) + *(nodeB.get());
+
+    EXPECT_EQ(c->previous.size(), 2) << "The addition operator should have two children, one for each operand" << std::endl;
 
     float randomGradientValue = 57.0;
     c->grad->assignValue(randomGradientValue);
@@ -125,6 +129,9 @@ TEST(NodeOperations, node_multiplication)
         {2, 7},
         {6, 5}
     };
+
+    EXPECT_EQ(c->previous.size(), 2) << "The multiplication operator should have two children, one for each operand" << std::endl;
+
 
     c->grad = std::make_shared<Mat>(randomGradientValue);
 
