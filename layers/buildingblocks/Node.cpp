@@ -139,9 +139,9 @@ std::shared_ptr<Node> sum(std::shared_ptr<Node> nodeA)
     std::weak_ptr<Node> weakA(nodeA);
     std::weak_ptr<Node> weakOut(out);
 
-    out->backward = [&]()
+    out->backward = [weakA, weakOut]()
     {
-         std::shared_ptr<Node> nA = weakA.lock();
+        std::shared_ptr<Node> nA = weakA.lock();
         if(!nA)
             throw std::runtime_error("Can't get lock to pointer of A in sum operator!");
 
@@ -149,11 +149,9 @@ std::shared_ptr<Node> sum(std::shared_ptr<Node> nodeA)
         if(!nOut)
             throw std::runtime_error("Can't get lock to pointer of out in sum operator!");
 
-        float gradientToPropagate = out->grad->getPiece()[0][0];
+        float gradientToPropagate = nOut->grad->getPiece()[0][0];
         svf grad = nA->grad->getPiece();
-        nA->grad->forEach([&](int i, int j, float value){
-            grad[i][j] += gradientToPropagate;
-        });
+        *(nA->grad.get()) += gradientToPropagate;
     };
     return out;
 }

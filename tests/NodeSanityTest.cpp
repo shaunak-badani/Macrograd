@@ -158,3 +158,26 @@ TEST(NodeOperations, node_multiplication)
         EXPECT_TRUE(abs(expectedGradB[i][j] - value) < 1e-3);
     });
 }
+
+TEST(NodeOperations, node_sum_test)
+{
+    svf a = {
+        {-1, 4},
+        {2, 7},
+        {6, 5}
+    };
+
+    std::shared_ptr<Node> input = std::make_shared<Node>(
+        std::make_shared<Mat>(a)
+    );
+
+    std::shared_ptr<Node> output = sum(input);
+
+    EXPECT_EQ(output->data->getPiece()[0][0], 23);
+
+    output->grad->assignValue(1.0);
+    output->backward();
+    input->grad->forEach([=](int i, int j, float value){
+        EXPECT_TRUE(abs(value - 1.0) < 1e-3);
+    });
+}

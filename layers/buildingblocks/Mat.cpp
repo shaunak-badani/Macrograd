@@ -131,6 +131,14 @@ void Mat::operator+=(Mat const& b)
     });
 }
 
+void Mat::operator+=(float &adder) 
+{
+    this->forEach([=](int i, int j, float value)
+    {
+        this->piece[i][j] += adder;
+    });
+}
+
 std::ostream& operator<<(std::ostream& os, const Mat& a)
 {
     a.forEach([=](int i, int j, float value) { std::cout << a.piece[i][j] << " "; });

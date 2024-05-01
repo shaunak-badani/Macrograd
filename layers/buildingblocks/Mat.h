@@ -29,6 +29,7 @@ class Mat
         Mat operator*(Mat const& b) const;
 
         void operator+=(Mat const& b);
+        void operator+=(float &value);
 
         friend std::ostream& operator<<(std::ostream &os, const Mat&a);
 
