@@ -30,10 +30,8 @@ std::shared_ptr<Node> Node::operator+(Node& b)
     
     out->backward = [&]()
     {
-        std::shared_ptr<Mat> thisGrad = std::make_shared<Mat>(*(out->grad) + *(b.grad));
-        std::shared_ptr<Mat> bGrad = std::make_shared<Mat>(*(out->grad) + *(this->grad));
-        b.grad = bGrad;
-        this->grad = thisGrad;
+        *(b.grad.get()) += *(out->grad);
+        *(this->grad.get()) += *(out->grad);
     };
     return out;
 }
@@ -49,10 +47,8 @@ std::shared_ptr<Node> Node::operator*(Node& b)
     
     out->backward = [&]()
     {
-        Mat thisGrad = *(this->grad) + (*(out->grad) * (b.data->T()));
-        Mat bGrad = *(b.grad) + (this->data->T() * *(out->grad));
-        this->grad = std::make_shared<Mat>(thisGrad);
-        b.grad = std::make_shared<Mat>(bGrad);
+        *(this->grad.get()) += (*(out->grad) * (b.data->T()));
+        *(b.grad.get()) += (this->data->T() * *(out->grad));
     };
     return out;
 }
