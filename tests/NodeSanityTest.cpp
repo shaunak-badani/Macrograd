@@ -123,7 +123,7 @@ TEST(NodeOperations, node_multiplication)
     std::shared_ptr<Mat> b = std::make_shared<Mat>(vectorB);
     std::shared_ptr<Node> nodeB = std::make_shared<Node>(b);
 
-    std::shared_ptr<Node> c = *nodeA * *nodeB;
+    std::shared_ptr<Node> c = nodeA * nodeB;
     svf randomGradientValue = {
         {-1, 4},
         {2, 7},

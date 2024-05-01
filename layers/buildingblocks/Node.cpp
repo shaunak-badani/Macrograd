@@ -90,19 +90,35 @@ std::shared_ptr<Node> operator-(std::shared_ptr<Node> nodeA, std::shared_ptr<Nod
     return out;
 }
 
-std::shared_ptr<Node> Node::operator*(Node& b)
+std::shared_ptr<Node> operator*(std::shared_ptr<Node> nodeA, std::shared_ptr<Node> nodeB)
 {
-    Mat resultMat = *(this->data) * (*(b.data));
+    Mat resultMat = *(nodeA->data.get()) * (*(nodeB->data.get()));
     std::shared_ptr<Node> out = std::make_shared<Node>(std::make_shared<Mat>(resultMat),
         std::unordered_set<std::shared_ptr<Node>>({
-            std::make_shared<Node>(b), 
-            std::make_shared<Node>(*this)
+            nodeA,
+            nodeB
         }));
+
+    std::weak_ptr<Node> weakA(nodeA);
+    std::weak_ptr<Node> weakB(nodeB);
+    std::weak_ptr<Node> weakOut(out);
     
-    out->backward = [&]()
+    out->backward = [weakA, weakB, weakOut]()
     {
-        *(this->grad.get()) += (*(out->grad) * (b.data->T()));
-        *(b.grad.get()) += (this->data->T() * *(out->grad));
+        std::shared_ptr<Node> nA = weakA.lock();
+        if(!nA)
+            throw std::runtime_error("Can't get lock to pointer of A in multiplication operator!");
+
+        std::shared_ptr<Node> nB = weakB.lock();
+        if(!nB)
+            throw std::runtime_error("Can't get lock to pointer of B in multiplication operator!");
+
+        std::shared_ptr<Node> nOut = weakOut.lock();
+        if(!nOut)
+            throw std::runtime_error("Can't get lock to pointer of Out in multiplication operator!");
+
+        *(nA->grad.get()) += (*(nOut->grad) * (nB->data->T()));
+        *(nB->grad.get()) += (nA->data->T() * *(nOut->grad));
     };
     return out;
 }
