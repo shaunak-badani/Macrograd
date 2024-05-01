@@ -47,13 +47,13 @@ TEST(NodeOperations, node_addition)
 
     c->backward();
 
-    // nodeB->grad->forEach([=](int i, int j, float value){
-    //     EXPECT_EQ(value, randomGradientValue);
-    // });
+    nodeB->grad->forEach([=](int i, int j, float value){
+        EXPECT_EQ(value, randomGradientValue);
+    });
 
-    // nodeA->grad->forEach([=](int i, int j, float value){
-    //     EXPECT_EQ(value, randomGradientValue);
-    // });
+    nodeA->grad->forEach([=](int i, int j, float value){
+        EXPECT_EQ(value, randomGradientValue);
+    });
 }
 
 TEST(NodeOperations, node_subtraction)

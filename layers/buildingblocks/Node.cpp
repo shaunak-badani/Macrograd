@@ -42,7 +42,7 @@ std::shared_ptr<Node> operator+(std::shared_ptr<Node> nodeA, std::shared_ptr<Nod
         if(!nB)
             throw std::runtime_error("Can't get lock to pointer of B in addition operator!");
 
-        std::shared_ptr<Node> nOut = weakB.lock();
+        std::shared_ptr<Node> nOut = weakOut.lock();
         if(!nOut)
             throw std::runtime_error("Can't get lock to pointer of Out in addition operator!");
 
