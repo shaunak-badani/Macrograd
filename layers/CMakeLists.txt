@@ -9,7 +9,7 @@ add_subdirectory(lossfns)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(${TARGET_NAME} Layer.cpp LayerUtils.cpp)
+add_library(${TARGET_NAME} LayerUtils.cpp Linear.cpp)
 
 target_link_libraries(${TARGET_NAME} PRIVATE BuildingBlocks Operators)
 target_include_directories(${TARGET_NAME} PUBLIC 

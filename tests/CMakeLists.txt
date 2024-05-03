@@ -59,3 +59,20 @@ target_include_directories(${LOSS_FN_TARGET_NAME}
       )
 
 add_test(NAME ${LOSS_FN_TARGET_NAME} COMMAND $<TARGET_FILE:${LOSS_FN_TARGET_NAME}>)
+
+
+# Layers Tests
+
+set(LAYERS_TARGET_NAME Layers_test)
+
+add_executable(${LAYERS_TARGET_NAME} LayersTest.cpp)
+target_link_libraries(${LAYERS_TARGET_NAME} PRIVATE Layers GTest::gtest_main GTest::gmock_main)
+target_include_directories(${LAYERS_TARGET_NAME} 
+      PUBLIC 
+      ${PROJECT_SOURCE_DIR}/layers
+)
+add_test(NAME ${LAYERS_TARGET_NAME} COMMAND $<TARGET_FILE:${LAYERS_TARGET_NAME}>)
+
+
+
+
