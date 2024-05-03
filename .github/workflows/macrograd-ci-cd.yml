@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   build:
@@ -28,18 +29,3 @@ jobs:
       run: |
         cd build/tests
         ctest --output-on-failure
-
-  manual_trigger:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
-    steps:
-    - name: Manual trigger
-      uses: actions/github-script@v4
-      with:
-        script: |
-          const output = await github.actions.createWorkflowDispatch({
-            workflow_id: '${{ github.workflow }}',
-            ref: '${{ github.sha }}'
-          })
-          console.log(output)
