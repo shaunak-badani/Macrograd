@@ -24,11 +24,10 @@ jobs:
     - name: Configure and build
       run: |
         mkdir build
-        cd build
-        cmake ..
-        cmake --build .
+        cmake -S . -B build
+        cmake --build build
 
     - name: Run tests
       run: |
-        cd build
+        cd build/tests
         ctest --output-on-failure
