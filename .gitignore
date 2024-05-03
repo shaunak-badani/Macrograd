@@ -12,3 +12,4 @@ _deps
 datasets
 build/
 .vscode
+python_notebooks
