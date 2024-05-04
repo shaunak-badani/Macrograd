@@ -14,28 +14,13 @@ class ModelBuilder
         std::shared_ptr<LearningRate> learningRate;
 
     public:
-        ModelBuilder& addLayer(std::shared_ptr<Layer> layer)
-        {
-            this->layers.push_back(layer);
-            return *this;
-        }
+        ModelBuilder& addLayer(std::shared_ptr<Layer> layer);
 
-        ModelBuilder& setLossFn(std::shared_ptr<LossFn> lossFn)
-        {
-            this->lossFn = lossFn;
-            return *this;
-        }
+        ModelBuilder& setLossFn(std::shared_ptr<LossFn> lossFn);
 
-        ModelBuilder& setLearningRate(std::shared_ptr<LearningRate> lr)
-        {
-            this->learningRate = lr;
-            return *this;
-        }
+        ModelBuilder& setLearningRate(std::shared_ptr<LearningRate> lr);
 
-        std::shared_ptr<Model> build()
-        {
-            return std::make_shared<Model>(layers, lossFn, learningRate);
-        }
+        std::shared_ptr<Model> build();
 };
 
 #endif
