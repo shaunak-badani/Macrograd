@@ -86,6 +86,18 @@ target_include_directories(${MODEL_TARGET_NAME}
 )
 add_test(NAME ${MODEL_TARGET_NAME} COMMAND $<TARGET_FILE:${MODEL_TARGET_NAME}>)
 
+# Learning Rates test
+
+set(LR_TARGET_NAME Learning_rates_test)
+
+add_executable(${LR_TARGET_NAME} LearningRatesTest.cpp)
+target_link_libraries(${LR_TARGET_NAME} PRIVATE LearningRates GTest::gtest_main GTest::gmock_main)
+target_include_directories(${LR_TARGET_NAME} 
+      PUBLIC 
+      ${PROJECT_SOURCE_DIR}/layers/learningrates
+)
+add_test(NAME ${LR_TARGET_NAME} COMMAND $<TARGET_FILE:${LR_TARGET_NAME}>)
+
 
 
 
