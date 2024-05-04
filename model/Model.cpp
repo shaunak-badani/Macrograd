@@ -71,6 +71,7 @@ void Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabel
     for(std::shared_ptr<Node> param : modelParams)
     {
         param->data -= learningRate * param->grad;
+        param->grad->assignValue(0.0);
     }
 }
 
