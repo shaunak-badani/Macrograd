@@ -10,6 +10,7 @@ struct ModelBuilderTest : testing::Test
 {
     std::vector<std::shared_ptr<Layer>> layers;
     std::shared_ptr<LossFn> lossFn;
+    std::shared_ptr<LearningRate> lr;
     std::shared_ptr<ModelBuilder> modelBuilder;
 
     // test input
@@ -34,6 +35,8 @@ struct ModelBuilderTest : testing::Test
         test_labels = std::make_shared<Node>(
                 std::make_shared<Mat>(test_labels_vec)
             );
+        // learning rate has to be < 0.0002, else this doesn't work
+        lr = std::make_shared<StaticLR>(0.0001);
         modelBuilder = std::make_shared<ModelBuilder>();
     }
     
@@ -68,7 +71,7 @@ TEST_F(ModelBuilderTest, test_build_model_exceptions)
     );
 
     //assign a learning rate
-    modelBuilder->setLearningRate(std::make_shared<StaticLR>(0.2));
+    modelBuilder->setLearningRate(lr);
     EXPECT_NO_THROW(
         modelBuilder->build()
     );
@@ -81,4 +84,25 @@ TEST_F(ModelBuilderTest, test_build_model_exceptions)
         modelBuilder->build(),
         std::runtime_error
     );
+}
+
+TEST_F(ModelBuilderTest, test_model_train_with_one_epoch)
+{
+
+    modelBuilder->addLayer(layers.front());
+    modelBuilder->setLossFn(lossFn);
+    modelBuilder->setLearningRate(lr);
+
+    std::shared_ptr<Model> model = modelBuilder->build();
+
+    std::shared_ptr<Node> loss = model->forward(test_node, test_labels);
+
+    float initialLoss = loss->data->getPiece()[0][0];
+
+    model->train(test_node->data, test_labels->data);
+
+    float lossAfter = model->forward(test_node, test_labels)->data->getPiece()[0][0];
+
+    EXPECT_LE(lossAfter, initialLoss);
+
 }

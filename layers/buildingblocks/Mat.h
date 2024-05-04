@@ -32,6 +32,8 @@ class Mat
         void operator+=(float &value);
 
         friend std::ostream& operator<<(std::ostream &os, const Mat&a);
+        friend void operator-=(std::shared_ptr<Mat> operand, std::shared_ptr<Mat> input);
+        friend std::shared_ptr<Mat> operator*(float value, std::shared_ptr<Mat> input);
 
         std::shared_ptr<Mat> mapFunction(std::function<float(int, int, float)> apply) const;
 

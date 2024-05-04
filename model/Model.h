@@ -7,9 +7,12 @@
 #include <memory>
 #include "LossFn.h"
 #include "LearningRate.h"
+#include "LayerUtils.h"
 
 class Model
 {
+    private:
+        std::shared_ptr<LayerUtils> layerUtils;
     public:
         std::vector<std::shared_ptr<Layer>> layers;
         std::shared_ptr<LossFn> lossFn;
@@ -23,6 +26,11 @@ class Model
         std::shared_ptr<Node> forward(std::shared_ptr<Node> input, std::shared_ptr<Node> traininglabels);
 
         void backward();
+
+        void train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels);
+
+        std::vector<std::shared_ptr<Node>> parameters();
+        
 };
 
 #endif

@@ -38,6 +38,10 @@ TEST_F(LayersTest, test_layers_initialized_properly)
         EXPECT_LE(value, 1.0);
         EXPECT_GE(value, -1.0);
     });
+
+    std::vector<std::shared_ptr<Node>> params = layer->getParameters();
+
+    EXPECT_EQ(params.size(), 1);
 }
 
 

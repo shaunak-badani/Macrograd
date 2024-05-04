@@ -122,6 +122,30 @@ TEST_F(NormalBehaviorSetup, Mat_copyconstructor_test)
     });
 }
 
+TEST_F(NormalBehaviorSetup, Minus_Equal_and_Multiplication)
+{
+    std::shared_ptr<Mat> matA = std::make_shared<Mat>(a);
+    std::shared_ptr<Mat> matB = std::make_shared<Mat>(b);
+    matA -= matB;
+    
+    svf expectedResultVector = {
+        {-8.0, -5.0, 128.2, 114.0},
+        {-6.1, 4.4, 6.9, 76.6},
+        {-3.3, 11.2, 15.1, 12.8},
+        {-6.8, -30.7, -32.7, 177.4}
+    };
+    matA->forEach([=](int i, int j, float value) {
+        EXPECT_FLOAT_EQ(expectedResultVector[i][j], value);
+    });
+
+    matA = std::make_shared<Mat>(a);
+    std::shared_ptr<Mat> matC = 0.4 * matA;
+
+    matC->forEach([=](int i, int j, float value) {
+        EXPECT_FLOAT_EQ(value, 0.4 * a[i][j]);
+    });
+}
+
 struct ErrorThrowSetup : public testing::Test
 {
     svf a;
@@ -199,6 +223,8 @@ TEST_F(PartialBehaviorSetup, ThrowsErrorOnlyForAddition)
     Mat C = A * B;
     assertClose(C, expectedResultVector);
 }
+
+
 
 int main(int argc, char **argv) 
 {
