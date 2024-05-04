@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(Macrograd VERSION 1.0)
 
 # specify the C++ standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_subdirectory(datasetreader)
@@ -14,6 +14,13 @@ target_link_libraries(${PROJECT_NAME} PUBLIC DataSetReader)
 
 target_include_directories(${PROJECT_NAME} PUBLIC 
                             "${PROJECT_SOURCE_DIR}/datasetreader")
+
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
 
 include(CTest) # We include CTest which is part of CMake
 enable_testing()
