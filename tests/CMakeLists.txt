@@ -73,6 +73,19 @@ target_include_directories(${LAYERS_TARGET_NAME}
 )
 add_test(NAME ${LAYERS_TARGET_NAME} COMMAND $<TARGET_FILE:${LAYERS_TARGET_NAME}>)
 
+# Model test
+
+set(MODEL_TARGET_NAME Model_test)
+
+add_executable(${MODEL_TARGET_NAME} ModelTest.cpp)
+target_link_libraries(${MODEL_TARGET_NAME} PRIVATE Model GTest::gtest_main GTest::gmock_main)
+target_include_directories(${MODEL_TARGET_NAME} 
+      PUBLIC 
+      ${PROJECT_SOURCE_DIR}/model
+      ${PROJECT_SOURCE_DIR}/layers/operators
+)
+add_test(NAME ${MODEL_TARGET_NAME} COMMAND $<TARGET_FILE:${MODEL_TARGET_NAME}>)
+
 
 
 
