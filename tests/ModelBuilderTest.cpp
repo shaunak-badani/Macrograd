@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Node.h"
 #include "ModelBuilder.h"
+#include "StaticLR.h"
 
 struct ModelBuilderTest : testing::Test
 {
@@ -51,17 +52,27 @@ TEST_F(ModelBuilderTest, test_build_model_exceptions)
         std::runtime_error
     );
 
-    // with only loss fn, will not throw error while creation.
+    // with only loss fn, will throw error while creation, since no learning rate is defined.
     modelBuilder->setLossFn(lossFn);
+    EXPECT_THROW(
+        modelBuilder->build(),
+        std::runtime_error
+    );
+
+    // with standard layer and loss fn
+    // will throw an error because there's no learning rate
+    modelBuilder->addLayer(layers.front());
+    EXPECT_THROW(
+        modelBuilder->build(),
+        std::runtime_error
+    );
+
+    //assign a learning rate
+    modelBuilder->setLearningRate(std::make_shared<StaticLR>(0.2));
     EXPECT_NO_THROW(
         modelBuilder->build()
     );
 
-    // with standard layer and loss fn, should not throw any error while creation
-    modelBuilder->addLayer(layers.front());
-    EXPECT_NO_THROW(
-        modelBuilder->build()
-    );
 
     // with null layers
     std::shared_ptr<Layer> nullLayer;

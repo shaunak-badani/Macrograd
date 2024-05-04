@@ -2,6 +2,7 @@
 #define MODEL_BUILDER_H
 #include "Model.h"
 #include "LossFn.h"
+#include "LearningRate.h"
 
 class ModelBuilder
 {
@@ -9,6 +10,8 @@ class ModelBuilder
         std::vector<std::shared_ptr<Layer>> layers;
 
         std::shared_ptr<LossFn> lossFn;
+
+        std::shared_ptr<LearningRate> learningRate;
 
     public:
         ModelBuilder& addLayer(std::shared_ptr<Layer> layer)
@@ -23,9 +26,15 @@ class ModelBuilder
             return *this;
         }
 
+        ModelBuilder& setLearningRate(std::shared_ptr<LearningRate> lr)
+        {
+            this->learningRate = lr;
+            return *this;
+        }
+
         std::shared_ptr<Model> build()
         {
-            return std::make_shared<Model>(layers, lossFn);
+            return std::make_shared<Model>(layers, lossFn, learningRate);
         }
 };
 

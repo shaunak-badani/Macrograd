@@ -1,6 +1,10 @@
 #include "Model.h"
 
-Model::Model(std::vector<std::shared_ptr<Layer>> layers, std::shared_ptr<LossFn> lossFn)
+Model::Model(
+    std::vector<std::shared_ptr<Layer>> layers, 
+    std::shared_ptr<LossFn> lossFn,
+    std::shared_ptr<LearningRate> lr
+    )
 {
     for(std::shared_ptr<Layer> layer : layers)
     {
@@ -12,6 +16,10 @@ Model::Model(std::vector<std::shared_ptr<Layer>> layers, std::shared_ptr<LossFn>
         throw std::runtime_error("Can't initialize a model without a loss function!");
 
     this->lossFn = lossFn;
+    if(!lr)
+        throw std::runtime_error("Can't initialize a model without a proper learning rate!");
+
+    this->lr = lr;
 }
 
 std::shared_ptr<Node> Model::forward(std::shared_ptr<Node> input, std::shared_ptr<Node> traininglabels)
