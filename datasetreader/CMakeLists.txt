@@ -1,4 +1,4 @@
-add_library(DataSetReader MNISTReader.cpp)
+add_library(DataSetReader CSVReader.cpp)
 
 target_link_libraries(DataSetReader PRIVATE IOUtils)
 

@@ -1,7 +1,7 @@
 #include "DataSetReader.h"
 #include <fstream>
 
-class MNISTReader : public DataSetReader
+class CSVReader : public DataSetReader
 {
     private:
         
@@ -10,5 +10,5 @@ class MNISTReader : public DataSetReader
 
     public:
         std::vector<std::vector<float>> readData() override;
-        MNISTReader(std::string filePath, int batch_size);
+        CSVReader(std::string filePath, int batch_size);
 };
