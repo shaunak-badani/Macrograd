@@ -4,9 +4,11 @@
 class MNISTReader : public DataSetReader
 {
     private:
-        std::ifstream myfile;
+        
+        std::string filePath;
+        std::streampos filePos;
 
     public:
         std::vector<std::vector<float>> readData() override;
-        MNISTReader(int batch_size);
+        MNISTReader(std::string filePath, int batch_size);
 };
