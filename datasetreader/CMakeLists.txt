@@ -1,5 +1,13 @@
-add_library(DataSetReader MNISTReader.cpp)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-target_link_libraries(DataSetReader PRIVATE IOUtils)
+add_library(DataSetReader CSVReader.cpp DataSet.cpp)
 
-target_include_directories(DataSetReader PUBLIC ${PROJECT_SOURCE_DIR}/ioutils)
+configure_file(DataSetsPathConfig.h.in DataSetsPathConfig.h)
+
+target_link_libraries(DataSetReader PRIVATE IOUtils BuildingBlocks)
+
+
+target_include_directories(DataSetReader PUBLIC
+    ${PROJECT_SOURCE_DIR}/ioutils
+    ${PROJECT_SOURCE_DIR}/layers/buildingblocks)
