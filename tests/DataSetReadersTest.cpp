@@ -14,7 +14,7 @@ void expect_pair_eq(std::pair<int, int> expectedPair, std::pair<int, int> actual
 
 TEST(DataSetReader, CSVReader)
 {
-    std::string filePath = DATASETS_PATH + "/mnist_train.csv";
+    std::string filePath = DATASETS_PATH + "/mnist/mnist_train.csv";
     std::shared_ptr<DataSetReader> dataSetReader = std::make_shared<CSVReader>(
         filePath,
         32

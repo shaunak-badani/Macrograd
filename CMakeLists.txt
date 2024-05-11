@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(DATASETS_PATH ${PROJECT_SOURCE_DIR}/datasets)
 
+add_subdirectory(datasets)
+
 add_subdirectory(datasetreader)
 
 add_executable(${PROJECT_NAME} macrograd.cpp)
