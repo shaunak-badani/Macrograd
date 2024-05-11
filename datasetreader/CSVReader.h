@@ -1,5 +1,6 @@
 #include "DataSetReader.h"
 #include <fstream>
+#include "DataSet.h"
 
 class CSVReader : public DataSetReader
 {
@@ -9,6 +10,6 @@ class CSVReader : public DataSetReader
         std::streampos filePos;
 
     public:
-        std::vector<std::vector<float>> readData() override;
+        std::shared_ptr<DataSet> readData() override;
         CSVReader(std::string filePath, int batch_size);
 };

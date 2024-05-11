@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
+#include "DataSet.h"
 
 class DataSetReader
 {
@@ -11,7 +13,7 @@ class DataSetReader
 
     public:
 
-        virtual std::vector<std::vector<float>> readData() = 0;
+        virtual std::shared_ptr<DataSet> readData() = 0;
 };
 
 #endif
