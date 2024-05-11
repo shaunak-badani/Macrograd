@@ -3,6 +3,7 @@
 #include "CSVReader.h"
 #include <iostream>
 #include <memory>
+#include "DataSetsPathConfig.h"
 
 void expect_pair_eq(std::pair<int, int> expectedPair, std::pair<int, int> actualPair)
 {
@@ -13,7 +14,7 @@ void expect_pair_eq(std::pair<int, int> expectedPair, std::pair<int, int> actual
 
 TEST(DataSetReader, CSVReader)
 {
-    std::string filePath = "../../datasets/mnist_train.csv";
+    std::string filePath = DATASETS_PATH + "/mnist_train.csv";
     std::shared_ptr<DataSetReader> dataSetReader = std::make_shared<CSVReader>(
         filePath,
         32
@@ -30,7 +31,7 @@ TEST(DataSetReader, CSVReader)
 
 TEST(DataSetReader, CSVReaderNegativeTest)
 {
-    std::string filePath = "doesNotExistFileName";
+    std::string filePath = DATASETS_PATH + "doesNotExistFileName";
 
     EXPECT_THROW(
         std::make_shared<CSVReader>(filePath,2),

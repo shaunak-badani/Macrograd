@@ -3,8 +3,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_library(DataSetReader CSVReader.cpp DataSet.cpp)
 
+message("${DATASETS_PATH}")
+
+configure_file(DataSetsPathConfig.h.in DataSetsPathConfig.h)
 
 target_link_libraries(DataSetReader PRIVATE IOUtils BuildingBlocks)
+
 
 target_include_directories(DataSetReader PUBLIC
     ${PROJECT_SOURCE_DIR}/ioutils

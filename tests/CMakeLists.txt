@@ -107,6 +107,7 @@ target_link_libraries(${DATASETS_TARGET_NAME} PRIVATE DataSetReader GTest::gtest
 target_include_directories(${DATASETS_TARGET_NAME} 
       PUBLIC 
       ${PROJECT_SOURCE_DIR}/datasetreader
+      ${PROJECT_BINARY_DIR}/datasetreader # DataSetsPathConfig
 )
 add_test(NAME ${DATASETS_TARGET_NAME} COMMAND $<TARGET_FILE:${DATASETS_TARGET_NAME}>)
 
