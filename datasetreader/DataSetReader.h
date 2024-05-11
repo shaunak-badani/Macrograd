@@ -13,7 +13,7 @@ class DataSetReader
 
     public:
 
-        virtual std::shared_ptr<DataSet> readData() = 0;
+        virtual std::shared_ptr<DataSet> readNextBatch() = 0;
 };
 
 #endif

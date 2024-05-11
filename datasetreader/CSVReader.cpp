@@ -11,7 +11,7 @@ CSVReader::CSVReader(std::string filePath, int batch_size)
     this->filePos = 0;
 }
 
-std::shared_ptr<DataSet> CSVReader::readData()
+std::shared_ptr<DataSet> CSVReader::readNextBatch()
 {
     std::vector<std::vector<float>> csvData;
     std::vector<std::vector<float>> csvLabels;

@@ -10,6 +10,6 @@ class CSVReader : public DataSetReader
         std::streampos filePos;
 
     public:
-        std::shared_ptr<DataSet> readData() override;
+        std::shared_ptr<DataSet> readNextBatch() override;
         CSVReader(std::string filePath, int batch_size);
 };

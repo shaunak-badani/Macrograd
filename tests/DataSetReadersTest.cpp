@@ -19,7 +19,7 @@ TEST(DataSetReader, CSVReader)
         32
     );
 
-    std::shared_ptr<DataSet> dataSet = dataSetReader->readData();
+    std::shared_ptr<DataSet> dataSet = dataSetReader->readNextBatch();
 
     std::pair<int, int> dataShape = dataSet->getData()->data->getShape();
     std::pair<int, int> labelsShape = dataSet->getLabels()->data->getShape();
