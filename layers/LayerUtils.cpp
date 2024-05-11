@@ -25,6 +25,7 @@ void LayerUtils::buildTopoGraph(std::shared_ptr<Node> root)
 void LayerUtils::backward(std::shared_ptr<Node> root)
 {
     this->visited = std::unordered_set<std::shared_ptr<Node>>();
+    this->orderedNodes = std::vector<std::shared_ptr<Node>>();
     root->grad->assignValue(1.0);
     this->buildTopoGraph(root);
 

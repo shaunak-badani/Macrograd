@@ -15,6 +15,7 @@ class Linear : public Layer
 
         std::shared_ptr<Node> forward(std::shared_ptr<Node> input) override;
 
+        std::vector<std::shared_ptr<Node>> getParameters() override;
 };
 
 #endif

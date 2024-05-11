@@ -162,3 +162,17 @@ Mat Mat::T()
     }
     return Mat(p);
 }
+
+void operator-=(std::shared_ptr<Mat> operand, std::shared_ptr<Mat> input)
+{
+    operand->forEach([=](int i, int j, float value){
+        operand->piece[i][j] -= input->piece[i][j];
+    });
+}
+
+std::shared_ptr<Mat> operator*(float value, std::shared_ptr<Mat> input)
+{
+    return input->mapFunction([=](int i, int j, float p){
+        return p * value;
+    });
+}

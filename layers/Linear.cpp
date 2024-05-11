@@ -33,3 +33,8 @@ std::shared_ptr<Node> Linear::forward(std::shared_ptr<Node> input)
 {
     return input * this->weights;
 }
+
+std::vector<std::shared_ptr<Node>> Linear::getParameters()
+{
+    return {this->weights};
+}
