@@ -1,4 +1,8 @@
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 add_library(DataSetReader CSVReader.cpp DataSet.cpp)
+
 
 target_link_libraries(DataSetReader PRIVATE IOUtils BuildingBlocks)
 

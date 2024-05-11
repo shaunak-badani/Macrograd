@@ -3,11 +3,18 @@
 #include <fstream>
 #include <sstream>
 #include "DataSet.h"
+#include <filesystem>
+#include <iostream>
 
 CSVReader::CSVReader(std::string filePath, int batch_size)
 {
-    this->batch_size = batch_size;
+    if(!std::filesystem::exists(filePath))
+    {
+        std::string errorMessage = "Filename " + filePath + " doesn't exist!";
+        throw std::runtime_error(errorMessage);
+    }
     this->filePath = filePath;
+    this->batch_size = batch_size;
     this->filePos = 0;
 }
 

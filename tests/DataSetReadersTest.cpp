@@ -28,6 +28,16 @@ TEST(DataSetReader, CSVReader)
     expect_pair_eq(labelsShape, std::pair<int, int>({32, 1}));
 }
 
+TEST(DataSetReader, CSVReaderNegativeTest)
+{
+    std::string filePath = "doesNotExistFileName";
+
+    EXPECT_THROW(
+        std::make_shared<CSVReader>(filePath,2),
+        std::runtime_error
+    );
+}
+
 int main(int argc, char **argv) 
 {
     testing::InitGoogleTest(&argc, argv);
