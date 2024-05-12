@@ -12,12 +12,15 @@ add_subdirectory(datasets)
 
 add_subdirectory(datasetreader)
 
-add_executable(${PROJECT_NAME} macrograd.cpp)
+add_executable(${PROJECT_NAME} macrograd.cpp model_mediator.cpp)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC DataSetReader)
+target_link_libraries(${PROJECT_NAME} PUBLIC DataSetReader Model LossFns)
 
 target_include_directories(${PROJECT_NAME} PUBLIC 
             "${PROJECT_SOURCE_DIR}/datasetreader"
+            ${PROJECT_SOURCE_DIR}/model
+            ${PROJECT_SOURCE_DIR}/layers/lossfn
+            ${PROJECT_SOURCE_DIR}/layers/operators
             "${PROJECT_BINARY_DIR}/datasetreader" # for datasets path config header file
 )
 

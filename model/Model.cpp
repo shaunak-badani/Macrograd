@@ -56,12 +56,13 @@ std::vector<std::shared_ptr<Node>> Model::parameters()
 }
 
 
-void Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels)
+float Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels)
 {
     std::shared_ptr<Node> inputNode = std::make_shared<Node>(input);
     std::shared_ptr<Node> labelsNode = std::make_shared<Node>(trainingLabels);
 
     std::shared_ptr<Node> loss = this->forward(inputNode, labelsNode);
+    float loss_value = loss->data->getPiece()[0][0];
     this->layerUtils->backward(loss);
 
     std::vector<std::shared_ptr<Node>> modelParams = this->parameters();
@@ -73,5 +74,6 @@ void Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabel
         param->data -= learningRate * param->grad;
         param->grad->assignValue(0.0);
     }
+    return loss_value;
 }
 

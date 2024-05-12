@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <filesystem>
 #include <iostream>
+#include "model_mediator.h"
 
 int main(int argc, char* argv[])
 {
@@ -31,6 +32,7 @@ int main(int argc, char* argv[])
         std::cout << error.what() << std::endl;
         return 1;
     }
-    std::cout << data << std::endl;
-
+    ModelMediator modelMediator = data.template get<ModelMediator>();
+    modelMediator.run();
+    return 0;
 }
