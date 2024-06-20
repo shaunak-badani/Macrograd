@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include "Model.h"
 #include "DataSetReader.h"
+#include "output_handler.h"
 
 class ModelMediator
 {
@@ -10,6 +11,7 @@ class ModelMediator
         int num_epochs;
         std::shared_ptr<Model> model;
         std::shared_ptr<DataSetReader> dataset_reader;
+        std::shared_ptr<OutputHandler> output_handler;
 
         void run();
 };
