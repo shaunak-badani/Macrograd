@@ -86,4 +86,5 @@ void ModelMediator::run()
         this->output_handler->print_scalars(i);
         this->output_handler->flush_scalars();
     }
+    this->output_handler->print_model(this->model);
 }

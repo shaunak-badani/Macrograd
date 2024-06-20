@@ -141,7 +141,17 @@ void Mat::operator+=(float &adder)
 
 std::ostream& operator<<(std::ostream& os, const Mat& a)
 {
-    a.forEach([=](int i, int j, float value) { std::cout << a.piece[i][j] << " "; });
+    svf vec = a.piece;
+    std::pair<int, int> shape = a.getShape();
+    for(int i = 0 ; i < shape.first ; i++)
+    {
+        int j;
+        for(j = 0 ; j < shape.second - 1 ; j++)
+        {
+            os << a.piece[i][j] << ",";
+        }
+        os << a.piece[i][j] << std::endl;
+    }
     return os;
 }
 
