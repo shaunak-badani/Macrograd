@@ -186,3 +186,10 @@ std::shared_ptr<Mat> operator*(float value, std::shared_ptr<Mat> input)
         return p * value;
     });
 }
+
+std::shared_ptr<Mat> operator/(std::shared_ptr<Mat> input, float value)
+{
+    return input->mapFunction([=](int i, int j, float p){
+        return p / value;
+    });
+}

@@ -159,6 +159,38 @@ TEST(NodeOperations, node_multiplication)
     });
 }
 
+TEST(NodeOperations, node_division_test)
+{
+    svf a = {
+        {-1, 4},
+        {2, 7},
+        {6, 5}
+    };
+
+    std::shared_ptr<Node> input = std::make_shared<Node>(
+        std::make_shared<Mat>(a)
+    );
+
+    std::shared_ptr<Node> output = input / 2.0;
+
+    svf expectedOutput = {
+        {-0.5, 2.0},
+        {1, 3.5},
+        {3, 2.5}
+    };
+
+    output->data->forEach([=](int i, int j, float val){
+        EXPECT_EQ(expectedOutput[i][j], val);
+    }); 
+
+    output->grad->assignValue(1.0);
+    output->backward();
+    
+    input->grad->forEach([=](int i, int j, float value){
+        EXPECT_TRUE(abs(value - 0.5) < 1e-3);
+    });
+}
+
 TEST(NodeOperations, node_sum_test)
 {
     svf a = {
