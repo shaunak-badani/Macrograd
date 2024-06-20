@@ -7,7 +7,7 @@
 #include "LossFn.h"
 #include "MeanSquaredError.h"
 #include "StaticLR.h"
-
+#include "output_handler.h"
 
 void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
 {
@@ -23,7 +23,6 @@ void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
 
     // TODO: move this to factory
     file_path = DATASETS_PATH + "/" + file_path;
-    std::cout << file_path << std::endl;
 
     if(dataset_reader == "csv_reader")
         modelMediator.dataset_reader = std::make_shared<CSVReader>(file_path, batch_size);
@@ -33,6 +32,10 @@ void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
     std::vector<nlohmann::json> layers = j.at("layers");
 
     std::shared_ptr<ModelBuilder> modelBuilder = std::make_shared<ModelBuilder>();
+
+    std::string model_out;
+    j.at("output_folder").get_to(model_out);
+    modelMediator.output_handler = std::make_shared<OutputHandler>(model_out);
 
     for(nlohmann::json json_layer : layers)
     {
@@ -79,5 +82,8 @@ void ModelMediator::run()
         std::shared_ptr<DataSet> dataSet = dataset_reader->readNextBatch();
         float loss = model->train(dataSet->getData()->data, dataSet->getLabels()->data);
         std::cout << "Loss for epoch " << i << ": " << loss << std::endl;
+        this->output_handler->register_scalar(loss);
+        this->output_handler->print_scalars(i);
+        this->output_handler->flush_scalars();
     }
 }

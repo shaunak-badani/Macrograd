@@ -12,7 +12,7 @@ add_subdirectory(datasets)
 
 add_subdirectory(datasetreader)
 
-add_executable(${PROJECT_NAME} macrograd.cpp model_mediator.cpp)
+add_executable(${PROJECT_NAME} macrograd.cpp model_mediator.cpp output_handler.cpp)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC DataSetReader Model LossFns)
 

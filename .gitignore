@@ -12,3 +12,4 @@ _deps
 build/
 .vscode
 python_notebooks
+model_out
