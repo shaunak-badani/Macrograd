@@ -36,6 +36,30 @@ void OutputHandler::flush_scalars()
     this->scalar_values = std::vector<float>();
 }
 
+/* Model printing */
+
+void OutputHandler::print_model(std::shared_ptr<Model> model)
+{
+    std::vector<std::shared_ptr<Node>> layers = model->parameters();
+
+    if(!std::filesystem::exists(files_path + "/model"))
+    {
+        std::filesystem::create_directories(files_path + "/model");
+    }
+
+
+    for(int layerIndex = 0 ; layerIndex < layers.size() ; layerIndex++)
+    {
+        std::string fileName = std::to_string(layerIndex) + ".csv";
+        std::string absolutePath = files_path + "/model/" + fileName;
+        std::ofstream currentFile;
+        std::cout << absolutePath << std::endl;
+        currentFile.open(absolutePath);
+        currentFile << *layers[layerIndex]->data.get();
+        currentFile.close();
+    }
+}
+
 OutputHandler::~OutputHandler()
 {
     this->outFile.close();
