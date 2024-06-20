@@ -5,8 +5,7 @@
 ```
 cmake -S . -B build
 cmake --build build
-cd build
-./macrograd
+build/macrograd jsons/simple_json.json
 ```
 
 ### Running valgrind to check memory leaks:

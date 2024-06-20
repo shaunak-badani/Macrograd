@@ -25,9 +25,8 @@ class Model
 
         std::shared_ptr<Node> forward(std::shared_ptr<Node> input, std::shared_ptr<Node> traininglabels);
 
-        void backward();
-
-        void train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels);
+        // returns the loss evaluated
+        float train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels);
 
         std::vector<std::shared_ptr<Node>> parameters();
         

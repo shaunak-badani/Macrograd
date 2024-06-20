@@ -1,3 +1,18 @@
 {
-    "test_name": 123
+    "num_epochs": 100,
+    "layers":[
+        {
+            "type": "linear",
+            "input_size": 784,
+            "output_size": 1
+        }
+    ],
+    "learning_rate": {
+        "type": "simple",
+        "value": 0.0002
+    },
+    "loss_fn": "mean_squared",
+    "dataset_reader": "csv_reader",
+    "dataset" : "mnist/mnist_train.csv",
+    "batch_size": 32
 }

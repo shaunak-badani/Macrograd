@@ -1,15 +1,38 @@
 #include "CSVReader.h"
 #include "DataSetReader.h"
+#include <nlohmann/json.hpp>
+#include <filesystem>
 #include <iostream>
-#include <memory>
-#include "DataSetsPathConfig.h"
+#include "model_mediator.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    std::shared_ptr<DataSetReader> p = std::make_shared<CSVReader>(DATASETS_PATH + "/mnist/mnist_train.csv", 5);
-    std::shared_ptr<DataSet> dataSet = p->readNextBatch();
-    std::cout << *(dataSet->getData()->data.get()) << std::endl;
-    std::cout << "Label : " << std::endl;
-    std::cout << *(dataSet->getLabels()->data.get()) << std::endl;
+
+    if(argc != 2)
+    {
+        std::cout << "Usage : macrograd <path_to_json_file>" << std::endl;
+        return 1;
+    }
+
+    std::filesystem::path filePath = argv[1];
+    if(!std::filesystem::exists(filePath))
+    {
+        std::cout << "Couldn't find file " << argv[1]  << std::endl;
+        return 1;
+    }
+
+    std::ifstream fileStream(argv[1]);
+    nlohmann::json data;
+    try {
+        data = nlohmann::json::parse(fileStream);
+    }
+    catch(nlohmann::json_abi_v3_11_3::detail::parse_error error)
+    {
+        std::cout << "Couldn't parse JSON in file passed." << std::endl;
+        std::cout << error.what() << std::endl;
+        return 1;
+    }
+    ModelMediator modelMediator = data.template get<ModelMediator>();
+    modelMediator.run();
     return 0;
 }
