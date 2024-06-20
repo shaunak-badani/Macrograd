@@ -1,6 +1,6 @@
 set(TARGET_NAME LossFns)
 
-add_library(${TARGET_NAME} MeanSquaredError.cpp)
+add_library(${TARGET_NAME} MeanSquaredError.cpp RootMeanSquaredError.cpp)
 target_link_libraries(${TARGET_NAME} PUBLIC 
         Operators
         BuildingBlocks

@@ -6,10 +6,10 @@
 
 class Pow : public Operator
 {
-    int exponent;
+    float exponent;
 
     public: 
-        Pow(int power)
+        Pow(float power)
         {
             this->exponent = power;
         }

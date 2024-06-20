@@ -20,6 +20,8 @@ class Node
         friend std::shared_ptr<Node> operator+(std::shared_ptr<Node> a, std::shared_ptr<Node> b);
         friend std::shared_ptr<Node> operator-(std::shared_ptr<Node> a, std::shared_ptr<Node> b);
         friend std::shared_ptr<Node> operator*(std::shared_ptr<Node> a, std::shared_ptr<Node> b);
+        friend std::shared_ptr<Node> operator/(std::shared_ptr<Node> a, float b);
+        
         friend std::shared_ptr<Node> sum(std::shared_ptr<Node> a);
 };
 

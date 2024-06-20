@@ -123,6 +123,33 @@ std::shared_ptr<Node> operator*(std::shared_ptr<Node> nodeA, std::shared_ptr<Nod
     return out;
 }
 
+std::shared_ptr<Node> operator/(std::shared_ptr<Node> node, float value)
+{
+    std::shared_ptr<Mat> resultMat = node->data / value;
+
+    std::shared_ptr<Node> out = std::make_shared<Node>(resultMat, 
+        std::unordered_set<std::shared_ptr<Node>>({
+            node
+        }));
+
+    std::weak_ptr<Node> weakNode(node);
+    std::weak_ptr<Node> weakOut(out);
+
+    out->backward = [weakNode, weakOut, value]() {
+        std::shared_ptr<Node> node = weakNode.lock();
+        if(!node)
+            throw std::runtime_error("Can't get lock to pointer of node in division operator!");
+
+        std::shared_ptr<Node> nOut = weakOut.lock();
+        if(!nOut)
+            throw std::runtime_error("Can't get lock to pointer of Out in division operator!");
+
+        *(node->grad.get()) += *((nOut->grad / value).get());
+    };
+
+    return out;
+}
+
 std::shared_ptr<Node> sum(std::shared_ptr<Node> nodeA)
 {
     float totalSum = 0.0;
