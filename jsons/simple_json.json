@@ -3,17 +3,16 @@
     "layers":[
         {
             "type": "linear",
-            "input_size": 11,
+            "input_size": 784,
             "output_size": 1
         }
     ],
     "learning_rate": {
         "type": "simple",
-        "value": 0.0000002
+        "value": 0.0002
     },
     "loss_fn": "mean_squared",
     "dataset_reader": "csv_reader",
-    "dataset" : "monk/train.csv",
-    "batch_size": 32,
-    "output_folder": "model_out"
+    "dataset" : "mnist/mnist_train.csv",
+    "batch_size": 32
 }
