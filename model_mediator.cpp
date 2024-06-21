@@ -6,6 +6,7 @@
 #include "Linear.h"
 #include "LossFn.h"
 #include "MeanSquaredError.h"
+#include "RootMeanSquaredError.h"
 #include "StaticLR.h"
 #include "output_handler.h"
 
@@ -66,6 +67,8 @@ void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
     std::shared_ptr<LossFn> lossFn;
     if(j["loss_fn"] == "mean_squared")
         lossFn = std::make_shared<MeanSquaredError>();
+    else if(j["loss_fn"] == "root_mean_squared")
+        lossFn = std::make_shared<RootMeanSquaredError>();
     else
         throw std::runtime_error("Loss fn not supported!");
 

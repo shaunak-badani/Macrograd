@@ -29,6 +29,13 @@ std::shared_ptr<DataSet> CSVReader::readNextBatch()
     }
     std::string currentDataPoint;
     myfile.seekg(this->filePos);
+    
+    if(myfile.peek() == EOF)
+    {
+        this->filePos = 0;
+        myfile.seekg(this->filePos);
+    }
+
 
     if(myfile.is_open())
     {
