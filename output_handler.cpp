@@ -6,6 +6,7 @@ OutputHandler::OutputHandler(std::string files_path)
 {
     if(!std::filesystem::exists(files_path))
     {
+        std::cout << files_path << " doesn't exist. Creating directory..." << std::endl;
         std::filesystem::create_directories(files_path);
     }
 
@@ -36,6 +37,12 @@ void OutputHandler::flush_scalars()
     this->scalar_values = std::vector<float>();
 }
 
+std::string OutputHandler::get_files_path()
+{
+    return this->files_path;
+}
+
+
 /* Model printing */
 
 void OutputHandler::print_model(std::shared_ptr<Model> model)
@@ -53,7 +60,6 @@ void OutputHandler::print_model(std::shared_ptr<Model> model)
         std::string fileName = std::to_string(layerIndex) + ".csv";
         std::string absolutePath = files_path + "/model/" + fileName;
         std::ofstream currentFile;
-        std::cout << absolutePath << std::endl;
         currentFile.open(absolutePath);
         currentFile << *layers[layerIndex]->data.get();
         currentFile.close();

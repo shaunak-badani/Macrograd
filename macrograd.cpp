@@ -33,6 +33,8 @@ int main(int argc, char* argv[])
         return 1;
     }
     ModelMediator modelMediator = data.template get<ModelMediator>();
+    modelMediator.setJson(data);
     modelMediator.run();
+    modelMediator.summarize();
     return 0;
 }

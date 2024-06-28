@@ -99,7 +99,7 @@ TEST_F(ModelBuilderTest, test_model_train_with_one_epoch)
 
     std::vector<std::shared_ptr<Node>> params = model->parameters();
     float initialLoss = loss->data->getPiece()[0][0];
-    model->train(test_node->data, test_labels->data);
+    model->train(test_node->data, test_labels->data, 0);
     params = model->parameters();
 
     for(std::shared_ptr<Node> param : params)

@@ -11,5 +11,6 @@ CTestTestfile.cmake
 _deps
 build/
 .vscode
-python_notebooks
-model_out
+python_scripts/*.ipynb
+python_scripts/**/*.pyc
+out_models/*

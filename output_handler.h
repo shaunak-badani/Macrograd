@@ -17,6 +17,7 @@ class OutputHandler
         void register_scalar(float value);
         void flush_scalars();
         void print_model(std::shared_ptr<Model> model);
+        std::string get_files_path();
 
         OutputHandler(std::string file_path);
         ~OutputHandler();

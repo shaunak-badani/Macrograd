@@ -56,7 +56,7 @@ std::vector<std::shared_ptr<Node>> Model::parameters()
 }
 
 
-float Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels)
+float Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels, int epochNumber)
 {
     std::shared_ptr<Node> inputNode = std::make_shared<Node>(input);
     std::shared_ptr<Node> labelsNode = std::make_shared<Node>(trainingLabels);
@@ -67,7 +67,7 @@ float Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabe
 
     std::vector<std::shared_ptr<Node>> modelParams = this->parameters();
 
-    float learningRate = this->lr->getLearningRate(0);
+    float learningRate = this->lr->getLearningRate(epochNumber);
     
     for(std::shared_ptr<Node> param : modelParams)
     {

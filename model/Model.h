@@ -26,7 +26,7 @@ class Model
         std::shared_ptr<Node> forward(std::shared_ptr<Node> input, std::shared_ptr<Node> traininglabels);
 
         // returns the loss evaluated
-        float train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels);
+        float train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabels, int epochNumber);
 
         std::vector<std::shared_ptr<Node>> parameters();
         

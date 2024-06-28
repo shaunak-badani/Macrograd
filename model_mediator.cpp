@@ -8,7 +8,10 @@
 #include "MeanSquaredError.h"
 #include "RootMeanSquaredError.h"
 #include "StaticLR.h"
+#include "TimeBasedDecay.h"
+#include "StepDecay.h"
 #include "output_handler.h"
+#include <ctime>
 
 void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
 {
@@ -59,6 +62,18 @@ void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
     float lr_value = lr_json["value"];
     if(lr_json["type"] == "simple")
         lr = std::make_shared<StaticLR>(lr_value);
+    else if(lr_json["type"] == "time_based_decay")
+    {
+        float decay = lr_json["decay"];
+        lr = std::make_shared<TimeBasedDecay>(lr_value, decay);
+    }
+    else if(lr_json["type"] == "step_decay")
+    {
+        float drop = lr_json["drop"];
+        float epochs_drop = lr_json["epochs_drop"];
+
+        lr = std::make_shared<StepDecay>(lr_value, drop, epochs_drop);
+    }
     else
         throw std::runtime_error("Learning rate not supported!");
 
@@ -79,15 +94,43 @@ void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
 
 void ModelMediator::run()
 {
+    clock_t start = clock();
     for(int i = 1 ; i <= num_epochs ; i++)
     {
         // get inputs
         std::shared_ptr<DataSet> dataSet = dataset_reader->readNextBatch();
-        float loss = model->train(dataSet->getData()->data, dataSet->getLabels()->data);
+        float loss = model->train(dataSet->getData()->data, dataSet->getLabels()->data, i);
         std::cout << "Loss for epoch " << i << ": " << loss << std::endl;
         this->output_handler->register_scalar(loss);
         this->output_handler->print_scalars(i);
         this->output_handler->flush_scalars();
     }
+    clock_t end = clock();
+    double total_time_taken = double(end - start) / CLOCKS_PER_SEC;
+    this->output_metrics.setTimeTaken(total_time_taken);
+}
+
+void ModelMediator::summarize()
+{
+    // Adding output metrics to json file
+    std::cout << this->getJson() << std::endl;
+    this->getJson()["time_taken"] = this->output_metrics.getTimeTaken();
+
     this->output_handler->print_model(this->model);
+    std::string fileName = "out.json";
+    std::string absolutePath = this->output_handler->get_files_path() + "/" + fileName;
+    std::ofstream currentFile;
+    currentFile.open(absolutePath);
+    currentFile << std::setw(4) << this->getJson();
+    currentFile.close();
+}
+
+void ModelMediator::setJson(nlohmann::json& json)
+{
+    this->input = json;
+}
+
+nlohmann::json& ModelMediator::getJson()
+{
+    return this->input;
 }

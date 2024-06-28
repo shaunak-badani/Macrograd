@@ -150,7 +150,9 @@ std::ostream& operator<<(std::ostream& os, const Mat& a)
         {
             os << a.piece[i][j] << ",";
         }
-        os << a.piece[i][j] << std::endl;
+        os << a.piece[i][j];
+        if(i != (shape.first - 1))
+            os << std::endl;
     }
     return os;
 }
