@@ -12,7 +12,7 @@ class Mat
     private:
         svf piece;
     public:
-        svf getPiece();
+        svf& getPiece();
         std::pair<int, int> getShape() const;
 
         Mat(svf p);

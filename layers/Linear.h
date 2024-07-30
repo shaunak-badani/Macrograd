@@ -11,6 +11,8 @@ class Linear : public Layer
 
         std::shared_ptr<Node> weights;
 
+        std::shared_ptr<Node> biases;
+
         Linear(int input_size, int output_size);
 
         std::shared_ptr<Node> forward(std::shared_ptr<Node> input) override;

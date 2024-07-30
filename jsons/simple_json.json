@@ -1,5 +1,5 @@
 {
-    "num_epochs": 1000,
+    "num_epochs": 10000,
     "layers":[
         {
             "type": "linear",
@@ -8,14 +8,12 @@
         }
     ],
     "learning_rate": {
-        "type": "step_decay",
-        "value": 0.05,
-        "drop": 0.5,
-        "epochs_drop": 50
+        "type": "simple",
+        "value": 0.01
     },
     "loss_fn": "root_mean_squared",
     "dataset_reader": "csv_reader",
     "dataset" : "monk/train.csv",
     "batch_size": 1000,
-    "output_folder": "out_models/3_step_decay"
+    "output_folder": "out_models/1_simple_lr"
 }

@@ -111,6 +111,18 @@ target_include_directories(${DATASETS_TARGET_NAME}
 )
 add_test(NAME ${DATASETS_TARGET_NAME} COMMAND $<TARGET_FILE:${DATASETS_TARGET_NAME}>)
 
+# BroadcastTest
+
+set(BROADCAST_TEST_TARGET_NAME BroadcastTest)
+
+add_executable(${BROADCAST_TEST_TARGET_NAME} BroadcastTest.cpp)
+target_link_libraries(${BROADCAST_TEST_TARGET_NAME} PRIVATE Operators GTest::gtest_main GTest::gmock_main)
+target_include_directories(${BROADCAST_TEST_TARGET_NAME} 
+      PUBLIC 
+      ${PROJECT_SOURCE_DIR}/layers/operators
+)
+add_test(NAME ${BROADCAST_TEST_TARGET_NAME} COMMAND $<TARGET_FILE:${BROADCAST_TEST_TARGET_NAME}>)
+
 
 
 

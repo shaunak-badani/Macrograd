@@ -41,7 +41,8 @@ TEST_F(LayersTest, test_layers_initialized_properly)
 
     std::vector<std::shared_ptr<Node>> params = layer->getParameters();
 
-    EXPECT_EQ(params.size(), 1);
+    // weights and biases
+    EXPECT_EQ(params.size(), 2);
 }
 
 
