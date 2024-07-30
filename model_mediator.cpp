@@ -7,6 +7,7 @@
 #include "LossFn.h"
 #include "MeanSquaredError.h"
 #include "RootMeanSquaredError.h"
+#include "SoftmaxCrossEntropyLoss.h"
 #include "StaticLR.h"
 #include "TimeBasedDecay.h"
 #include "StepDecay.h"
@@ -84,6 +85,8 @@ void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
         lossFn = std::make_shared<MeanSquaredError>();
     else if(j["loss_fn"] == "root_mean_squared")
         lossFn = std::make_shared<RootMeanSquaredError>();
+    else if(j["loss_fn"] == "softmax_with_ce")
+        lossFn = std::make_shared<SoftmaxCrossEntropyLoss>();
     else
         throw std::runtime_error("Loss fn not supported!");
 

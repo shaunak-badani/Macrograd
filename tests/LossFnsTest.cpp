@@ -5,7 +5,7 @@
 #include "Node.h"
 #include "Mat.h"
 #include "LayerUtils.h"
-
+#include "SoftmaxCrossEntropyLoss.h"
 
 struct LossFnTest : public testing::Test
 {
@@ -98,6 +98,40 @@ TEST_F(LossFnTest, RootMeanSquaredError)
     // nodeB grad = -nodeA grad
     nodeB->grad->forEach([=](int i, int j, float value){
         EXPECT_TRUE(abs(value - (-expectedGradA[i][j])) < 1e-3);
+    });
+}
+
+TEST(SoftmaxTest, softmax_with_ce_test)
+{
+    svf actualValues = {{0.1, -3.445, 10}, {9, -4.5, 2.2}};
+    svf expectedValues = {{0, 1, 0}, {0, 0, 1}};
+
+    std::shared_ptr<Node> actual = std::make_shared<Node>(
+        std::make_shared<Mat>(actualValues)
+    );
+
+    std::shared_ptr<Node> expected = std::make_shared<Node>(
+        std::make_shared<Mat>(expectedValues)
+    );
+
+    std::shared_ptr<LossFn> loss = std::make_shared<SoftmaxCrossEntropyLoss>();
+    std::shared_ptr<Node> output = (*loss.get())(actual, expected);
+    std::pair<int, int> outputShape = output->data->getShape();
+
+    ASSERT_EQ(outputShape.first, 1) << "Loss output should have only 1 row" << std::endl;
+
+    ASSERT_EQ(outputShape.second, 1) << "Loss output should have only 1 column" << std::endl;
+    float expectedLoss = 10.1231;
+    ASSERT_NEAR(expectedLoss, output->data->getPiece()[0][0], 1e-3);
+
+    output->grad->assignValue(1.0);
+    output->backward();
+
+    svf expectedGrad = {{2.5086e-05, -5.0000e-01,  4.9997e-01},
+        {4.9944e-01,  6.8472e-07, -4.9944e-01}};
+    
+    actual->grad->forEach([=](int i, int j, float value){
+        EXPECT_NEAR(value, expectedGrad[i][j], 1e-5);
     });
 }
 
