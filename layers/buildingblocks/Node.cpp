@@ -7,7 +7,7 @@
 Node::Node(std::shared_ptr<Mat> paramData, std::unordered_set<std::shared_ptr<Node>> previous)
 {
     this->data = paramData;
-    this->grad = std::make_shared<Mat>(*(paramData.get()), 0.0);
+    this->grad = paramData->mapFunction([=](int i, int j, float value){ return 0; });
     this->previous = previous;
 }
 

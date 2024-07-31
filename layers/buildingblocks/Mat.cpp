@@ -19,11 +19,6 @@ Mat::Mat(svf p) : piece(p)
 
 }
 
-Mat::Mat(Mat& originalMat, const float initialValue)
-{
-    this->piece = (*originalMat.mapFunction([=](int i, int j, float k) { return initialValue; }).get()).getPiece();
-}
-
 svf& Mat::getPiece()
 {
     return this->piece;

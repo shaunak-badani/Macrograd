@@ -111,17 +111,6 @@ TEST_F(NormalBehaviorSetup, Mat_transpose_test)
 
 }
 
-TEST_F(NormalBehaviorSetup, Mat_copyconstructor_test)
-{
-    float newValue =  78.23;
-    Mat A(a);
-    Mat B(A, newValue);
-
-    B.forEach([=](int i, int j, float value) {
-        EXPECT_EQ(value, newValue);
-    });
-}
-
 TEST_F(NormalBehaviorSetup, Minus_Equal_and_Multiplication)
 {
     std::shared_ptr<Mat> matA = std::make_shared<Mat>(a);
