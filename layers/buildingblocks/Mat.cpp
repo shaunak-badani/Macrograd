@@ -19,9 +19,32 @@ Mat::Mat(svf p) : piece(p)
 
 }
 
-svf& Mat::getPiece()
+float Mat::at(int i, int j)
 {
-    return this->piece;
+    std::pair<int, int> shape = this->getShape();
+
+    if(i >= shape.first)
+        throw std::runtime_error("Illegal access of row index : " + std::to_string(i) 
+                            + " with a row length of : " + std::to_string(shape.first));
+    if(j >= shape.second)
+        throw std::runtime_error("Illegal access of column index : " + std::to_string(j) 
+                            + " with a column length of : " + std::to_string(shape.second));
+
+    return this->piece[i][j];
+}
+
+void Mat::setAt(int i, int j, float value)
+{
+    std::pair<int, int> shape = this->getShape();
+
+    if(i >= shape.first)
+        throw std::runtime_error("Illegal access of row index : " + std::to_string(i) 
+                            + " with a row length of : " + std::to_string(shape.first));
+    if(j >= shape.second)
+        throw std::runtime_error("Illegal access of column index : " + std::to_string(j) 
+                            + " with a column length of : " + std::to_string(shape.second));
+
+    this->piece[i][j] = value;
 }
 
 std::shared_ptr<Mat> Mat::mapFunction(std::function<float(int, int, float)> apply) const

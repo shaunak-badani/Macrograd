@@ -45,7 +45,7 @@ TEST_F(LossFnTest, MeanSquaredError)
     ASSERT_EQ(outputShape.first, 1) << "Loss output should have only 1 row" << std::endl;
 
     ASSERT_EQ(outputShape.second, 1) << "Loss output should have only 1 column" << std::endl;
-    ASSERT_TRUE(abs(expectedLoss - output->data->getPiece()[0][0]) < 1e-3);
+    ASSERT_TRUE(abs(expectedLoss - output->data->at(0,0))< 1e-3);
 
     output->grad->assignValue(1.0);
 
@@ -77,7 +77,7 @@ TEST_F(LossFnTest, RootMeanSquaredError)
 
     ASSERT_EQ(outputShape.second, 1) << "Loss output should have only 1 column" << std::endl;
 
-    ASSERT_TRUE(abs(expectedLoss - output->data->getPiece()[0][0]) < 1e-3);
+    ASSERT_TRUE(abs(expectedLoss - output->data->at(0, 0)) < 1e-3);
 
     output->grad->assignValue(1.0);
     std::shared_ptr<LayerUtils> layerUtils = std::make_shared<LayerUtils>();
@@ -122,7 +122,7 @@ TEST(SoftmaxTest, softmax_with_ce_test)
 
     ASSERT_EQ(outputShape.second, 1) << "Loss output should have only 1 column" << std::endl;
     float expectedLoss = 10.1231;
-    ASSERT_NEAR(expectedLoss, output->data->getPiece()[0][0], 1e-3);
+    ASSERT_NEAR(expectedLoss, output->data->at(0, 0), 1e-3);
 
     output->grad->assignValue(1.0);
     output->backward();

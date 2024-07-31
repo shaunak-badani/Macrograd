@@ -62,7 +62,7 @@ float Model::train(std::shared_ptr<Mat> input, std::shared_ptr<Mat> trainingLabe
     std::shared_ptr<Node> labelsNode = std::make_shared<Node>(trainingLabels);
 
     std::shared_ptr<Node> loss = this->forward(inputNode, labelsNode);
-    float loss_value = loss->data->getPiece()[0][0];
+    float loss_value = loss->data->at(0, 0);
     this->layerUtils->backward(loss);
 
     std::vector<std::shared_ptr<Node>> modelParams = this->parameters();

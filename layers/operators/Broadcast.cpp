@@ -17,10 +17,8 @@ std::shared_ptr<Node> Broadcast::Add::calculate(std::shared_ptr<Node> operandA, 
     if(aShape.first == 1)
         return calculate(operandB, operandA);
 
-    svf bMatrix = operandB->data->getPiece();
-        
     std::shared_ptr<Mat> outMatrix = operandA->data->mapFunction([=](int i, int j, float value) {
-        return value + bMatrix[0][j];
+        return value + operandB->data->at(0, j);
     });
 
     std::shared_ptr<Node> out = std::make_shared<Node>(outMatrix,
@@ -51,10 +49,8 @@ std::function<void(void)> Broadcast::Add::getBackward(std::shared_ptr<Node> oper
         
         *(operandAPtr->grad.get()) += *outPtr->grad.get();
 
-        svf& bGrad = operandBPtr->grad->getPiece();
-
-        outPtr->grad->forEach([&bGrad](int i, int j, float value){
-            bGrad[0][j] += value;
+        outPtr->grad->forEach([operandBPtr](int i, int j, float value){
+            operandBPtr->grad->setAt(0, j, operandBPtr->grad->at(0, j) + value);
         });
     };
 }

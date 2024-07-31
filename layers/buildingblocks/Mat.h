@@ -12,15 +12,12 @@ class Mat
     private:
         svf piece;
     public:
-        svf& getPiece();
+        float at(int i, int j);
+        void setAt(int i, int j, float value);
+
         std::pair<int, int> getShape() const;
 
         Mat(svf p);
-
-        // parameterized copy constructor
-        // Will create a matrix of similar size,
-        // and initialize all values to `initialValue`
-        Mat(Mat& originalMat, float initialValue);
 
         Mat operator+(Mat const& b) const;
 

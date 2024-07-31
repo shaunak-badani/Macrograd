@@ -205,7 +205,7 @@ TEST(NodeOperations, node_sum_test)
 
     std::shared_ptr<Node> output = sum(input);
 
-    EXPECT_EQ(output->data->getPiece()[0][0], 23);
+    EXPECT_EQ(output->data->at(0, 0), 23);
 
     output->grad->assignValue(1.0);
     output->backward();

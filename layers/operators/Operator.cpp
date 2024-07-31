@@ -12,9 +12,8 @@ void Operator::propagateGradientBackward(std::weak_ptr<Node> operand, std::weak_
         throw std::runtime_error("Can't access out lock");
 
     std::shared_ptr<Mat> grad = gradient(operandSharedPtr, outSharedPtr);
-    svf outGrad = outSharedPtr->grad->getPiece();
     std::shared_ptr<Mat> gradToBeAdded = grad.get()->mapFunction([=](int i, int j, float value){
-        return value * outGrad[i][j];
+        return value * outSharedPtr->grad->at(i, j);
     });
     *(operandSharedPtr->grad) += *gradToBeAdded.get();
 }
