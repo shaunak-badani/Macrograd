@@ -4,10 +4,11 @@
 #include <vector>
 #include <functional>
 #include <memory>
+#include "Vec.h"
 typedef std::vector<std::vector<float>> svf;
 
 
-class Mat
+class Mat : public Vec
 {
     private:
         svf piece;
@@ -15,7 +16,7 @@ class Mat
         float at(int i, int j);
         void setAt(int i, int j, float value);
 
-        std::pair<int, int> getShape() const;
+        std::vector<int> getShape() const override;
 
         Mat(svf p);
 

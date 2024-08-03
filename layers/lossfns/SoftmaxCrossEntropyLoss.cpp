@@ -11,7 +11,7 @@ std::shared_ptr<Node> SoftmaxCrossEntropyLoss::operator()(std::shared_ptr<Node> 
         loss_value += expectedValues->data->at(i,j) * log(P->at(i,j));
     });
 
-    int n = actualValues->data->getShape().first;
+    int n = actualValues->data->getShape().at(0);
     loss_value *= (-1 / (float)n);
 
     // svf l = {{loss_value}};
@@ -52,7 +52,7 @@ std::function<void(void)> SoftmaxCrossEntropyLoss::getBackward(std::shared_ptr<N
         
         std::shared_ptr<Mat> nP(getPValues(actualValuesPtr));
 
-        int n = expectedValuesPtr->data->getShape().first;
+        int n = expectedValuesPtr->data->getShape().at(0);
 
         nP->forEach([&](int i, int j, float value){
             float gradToBeAdded = outPtr->grad->at(0, 0) * (1 / (float)n) * (value - expectedValuesPtr->data->at(i, j));
@@ -74,7 +74,7 @@ std::shared_ptr<Mat> SoftmaxCrossEntropyLoss::getPValues(std::shared_ptr<Node> a
     if(m_max < 0)
         m_max = 0;
 
-    int n = actualValues->data->getShape().first;
+    int n = actualValues->data->getShape().at(0);
     
     std::vector<float> sums = std::vector<float>(n, 0);
     actualValues->data->forEach([&sums, m_max](int i, int j, float value){

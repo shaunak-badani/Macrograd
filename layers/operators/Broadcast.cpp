@@ -6,15 +6,15 @@ std::shared_ptr<Node> Broadcast::Add::calculate(std::shared_ptr<Node> operandA, 
     // Broadcast will only work if matrices are of type:
     // (m, n) and (1, n)
 
-    std::pair<int, int> aShape = operandA->data->getShape();
-    std::pair<int, int> bShape = operandB->data->getShape();
+    std::vector<int> aShape = operandA->data->getShape();
+    std::vector<int> bShape = operandB->data->getShape();
 
-    if(aShape.second != bShape.second)
+    if(aShape.at(1) != bShape.at(1))
         throw std::runtime_error("Matrices of shape (" 
-                + std::to_string(aShape.first) + "," + std::to_string(aShape.second) + ") and ("
-                + std::to_string(bShape.first) + "," + std::to_string(bShape.second) + ") cannot be broadcasted.");
+                + std::to_string(aShape.at(0)) + "," + std::to_string(aShape.at(1)) + ") and ("
+                + std::to_string(bShape.at(0)) + "," + std::to_string(bShape.at(1)) + ") cannot be broadcasted.");
             
-    if(aShape.first == 1)
+    if(aShape.at(0) == 1)
         return calculate(operandB, operandA);
 
     std::shared_ptr<Mat> outMatrix = operandA->data->mapFunction([=](int i, int j, float value) {

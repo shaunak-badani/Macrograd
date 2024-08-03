@@ -5,10 +5,10 @@
 #include <memory>
 #include "DataSetsPathConfig.h"
 
-void expect_pair_eq(std::pair<int, int> expectedPair, std::pair<int, int> actualPair)
+void expect_pair_eq(std::vector<int> expectedPair, std::vector<int> actualPair)
 {
-    EXPECT_EQ(expectedPair.first, actualPair.first);
-    EXPECT_EQ(expectedPair.second, actualPair.second);
+    EXPECT_EQ(expectedPair.at(0), actualPair.at(0));
+    EXPECT_EQ(expectedPair.at(1), actualPair.at(1));
 }
 
 
@@ -22,11 +22,11 @@ TEST(DataSetReader, CSVReader)
 
     std::shared_ptr<DataSet> dataSet = dataSetReader->readNextBatch();
 
-    std::pair<int, int> dataShape = dataSet->getData()->data->getShape();
-    std::pair<int, int> labelsShape = dataSet->getLabels()->data->getShape();
+    std::vector<int> dataShape = dataSet->getData()->data->getShape();
+    std::vector<int> labelsShape = dataSet->getLabels()->data->getShape();
 
-    expect_pair_eq(dataShape, std::pair<int, int>({32, 784}));
-    expect_pair_eq(labelsShape, std::pair<int, int>({32, 1}));
+    expect_pair_eq(dataShape, std::vector<int>({32, 784}));
+    expect_pair_eq(labelsShape, std::vector<int>({32, 1}));
 }
 
 TEST(DataSetReader, CSVReaderNegativeTest)

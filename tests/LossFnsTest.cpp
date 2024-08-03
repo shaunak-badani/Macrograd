@@ -40,11 +40,11 @@ TEST_F(LossFnTest, MeanSquaredError)
     std::shared_ptr<Node> output = (*lossFn.get())(nodeA, nodeB);
 
     float expectedLoss = 173.72;
-    std::pair<int, int> outputShape = output->data->getShape();
+    std::vector<int> outputShape = output->data->getShape();
 
-    ASSERT_EQ(outputShape.first, 1) << "Loss output should have only 1 row" << std::endl;
+    ASSERT_EQ(outputShape.at(0), 1) << "Loss output should have only 1 row" << std::endl;
 
-    ASSERT_EQ(outputShape.second, 1) << "Loss output should have only 1 column" << std::endl;
+    ASSERT_EQ(outputShape.at(1), 1) << "Loss output should have only 1 column" << std::endl;
     ASSERT_TRUE(abs(expectedLoss - output->data->at(0,0))< 1e-3);
 
     output->grad->assignValue(1.0);
@@ -71,11 +71,11 @@ TEST_F(LossFnTest, RootMeanSquaredError)
     std::shared_ptr<Node> output = (*lossFn.get())(nodeA, nodeB);
 
     float expectedLoss = 5.8944;
-    std::pair<int, int> outputShape = output->data->getShape();
+    std::vector<int> outputShape = output->data->getShape();
 
-    ASSERT_EQ(outputShape.first, 1) << "Loss output should have only 1 row" << std::endl;
+    ASSERT_EQ(outputShape.at(0), 1) << "Loss output should have only 1 row" << std::endl;
 
-    ASSERT_EQ(outputShape.second, 1) << "Loss output should have only 1 column" << std::endl;
+    ASSERT_EQ(outputShape.at(1), 1) << "Loss output should have only 1 column" << std::endl;
 
     ASSERT_TRUE(abs(expectedLoss - output->data->at(0, 0)) < 1e-3);
 
@@ -116,11 +116,11 @@ TEST(SoftmaxTest, softmax_with_ce_test)
 
     std::shared_ptr<LossFn> loss = std::make_shared<SoftmaxCrossEntropyLoss>();
     std::shared_ptr<Node> output = (*loss.get())(actual, expected);
-    std::pair<int, int> outputShape = output->data->getShape();
+    std::vector<int> outputShape = output->data->getShape();
 
-    ASSERT_EQ(outputShape.first, 1) << "Loss output should have only 1 row" << std::endl;
+    ASSERT_EQ(outputShape.at(0), 1) << "Loss output should have only 1 row" << std::endl;
 
-    ASSERT_EQ(outputShape.second, 1) << "Loss output should have only 1 column" << std::endl;
+    ASSERT_EQ(outputShape.at(1), 1) << "Loss output should have only 1 column" << std::endl;
     float expectedLoss = 10.1231;
     ASSERT_NEAR(expectedLoss, output->data->at(0, 0), 1e-3);
 

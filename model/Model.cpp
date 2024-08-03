@@ -30,13 +30,13 @@ std::shared_ptr<Node> Model::forward(std::shared_ptr<Node> input, std::shared_pt
     {
         x = layer->forward(x);
     }
-    std::pair<int, int> outputShape = x->data->getShape();
-    std::pair<int, int> labelsShape = traininglabels->data->getShape();
-    if(outputShape.second != labelsShape.second)
+    std::vector<int> outputShape = x->data->getShape();
+    std::vector<int> labelsShape = traininglabels->data->getShape();
+    if(outputShape.at(1) != labelsShape.at(1))
     {
         throw std::runtime_error("Label dimension doesn't match layer output dimension!");
     }
-    if(outputShape.first != labelsShape.first)
+    if(outputShape.at(0) != labelsShape.at(0))
     {
         throw std::runtime_error("Number of elements in input and labels does not match!");
     }

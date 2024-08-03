@@ -121,9 +121,9 @@ TEST_F(ModelTest, test_model_works_correctly)
     );
 
     // Asserting loss is a scalar
-    std::pair<int, int> lossShape = loss->data->getShape();
-    EXPECT_EQ(lossShape.first, 1);
-    EXPECT_EQ(lossShape.second, 1);
+    std::vector<int> lossShape = loss->data->getShape();
+    EXPECT_EQ(lossShape.at(0), 1);
+    EXPECT_EQ(lossShape.at(1), 1);
 }
 
 int main(int argc, char** argv)

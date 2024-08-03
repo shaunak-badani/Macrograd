@@ -12,9 +12,9 @@ TEST(NodeSetup, testing_node_sanity)
 
     std::shared_ptr<Mat> a = std::make_shared<Mat>(tmpVector);
     std::shared_ptr<Node> node = std::make_shared<Node>(a);
-    std::pair<int, int> gradShape = node->grad->getShape();
-    EXPECT_EQ(gradShape.first, 2);
-    EXPECT_EQ(gradShape.second, 2);
+    std::vector<int> gradShape = node->grad->getShape();
+    EXPECT_EQ(gradShape.at(0), 2);
+    EXPECT_EQ(gradShape.at(1), 2);
     node->grad->forEach([](int i, int j, float val){
         EXPECT_EQ(val, 0.0);
     });

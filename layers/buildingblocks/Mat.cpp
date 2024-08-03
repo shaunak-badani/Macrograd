@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-std::pair<int, int> Mat::getShape() const
+std::vector<int> Mat::getShape() const
 {
     int m = this->piece.size();
     if(!m)
@@ -21,37 +21,37 @@ Mat::Mat(svf p) : piece(p)
 
 float Mat::at(int i, int j)
 {
-    std::pair<int, int> shape = this->getShape();
+    std::vector<int> shape = this->getShape();
 
-    if(i >= shape.first)
+    if(i >= shape.at(0))
         throw std::runtime_error("Illegal access of row index : " + std::to_string(i) 
-                            + " with a row length of : " + std::to_string(shape.first));
-    if(j >= shape.second)
+                            + " with a row length of : " + std::to_string(shape.at(0)));
+    if(j >= shape.at(1))
         throw std::runtime_error("Illegal access of column index : " + std::to_string(j) 
-                            + " with a column length of : " + std::to_string(shape.second));
+                            + " with a column length of : " + std::to_string(shape.at(1)));
 
     return this->piece[i][j];
 }
 
 void Mat::setAt(int i, int j, float value)
 {
-    std::pair<int, int> shape = this->getShape();
+    std::vector<int> shape = this->getShape();
 
-    if(i >= shape.first)
+    if(i >= shape.at(0))
         throw std::runtime_error("Illegal access of row index : " + std::to_string(i) 
-                            + " with a row length of : " + std::to_string(shape.first));
-    if(j >= shape.second)
+                            + " with a row length of : " + std::to_string(shape.at(0)));
+    if(j >= shape.at(1))
         throw std::runtime_error("Illegal access of column index : " + std::to_string(j) 
-                            + " with a column length of : " + std::to_string(shape.second));
+                            + " with a column length of : " + std::to_string(shape.at(1)));
 
     this->piece[i][j] = value;
 }
 
 std::shared_ptr<Mat> Mat::mapFunction(std::function<float(int, int, float)> apply) const
 {
-    std::pair<int, int> shape = this->getShape();
-    int noOfRows = shape.first;
-    int noOfColumns = shape.second;
+    std::vector<int> shape = this->getShape();
+    int noOfRows = shape.at(0);
+    int noOfColumns = shape.at(1);
 
     svf p = svf(noOfRows, std::vector<float>(noOfColumns, 0));
 
@@ -67,9 +67,9 @@ std::shared_ptr<Mat> Mat::mapFunction(std::function<float(int, int, float)> appl
 
 void Mat::forEach(std::function<void(int, int, float)> apply) const
 {
-    std::pair<int, int> shape = this->getShape();
-    int noOfRows = shape.first;
-    int noOfColumns = shape.second;
+    std::vector<int> shape = this->getShape();
+    int noOfRows = shape.at(0);
+    int noOfColumns = shape.at(1);
 
     svf p = svf(noOfRows, std::vector<float>(noOfColumns, 0));
 
@@ -84,9 +84,9 @@ void Mat::forEach(std::function<void(int, int, float)> apply) const
 
 void Mat::assignValue(float value)
 {
-    std::pair<int, int> shape = this->getShape();
-    int noOfRows = shape.first;
-    int noOfColumns = shape.second;
+    std::vector<int> shape = this->getShape();
+    int noOfRows = shape.at(0);
+    int noOfColumns = shape.at(1);
 
 
     for(int i = 0 ; i < noOfRows ; i++)
@@ -120,20 +120,20 @@ Mat Mat::operator-(Mat const& b) const
 
 Mat Mat::operator*(Mat const& b) const
 {
-    std::pair<int, int> aShape = this->getShape();
-    std::pair<int, int> bShape = b.getShape();
+    std::vector<int> aShape = this->getShape();
+    std::vector<int> bShape = b.getShape();
 
-    if(aShape.second != bShape.first)
+    if(aShape.at(1) != bShape.at(0))
     {
         throw std::runtime_error("Matrices cannot be multiplied!");
     }
-    svf outputVector = svf(aShape.first, std::vector<float>(bShape.second, 0));
+    svf outputVector = svf(aShape.at(0), std::vector<float>(bShape.at(1), 0));
     Mat output(outputVector);
 
     return *output.mapFunction([=](int i, int j, float value)
     {
         float tmp = 0;
-        for(int k = 0 ; k < aShape.second ; k++)
+        for(int k = 0 ; k < aShape.at(1) ; k++)
         {
             tmp += this->piece[i][k] * b.piece[k][j];
         }
@@ -160,16 +160,16 @@ void Mat::operator+=(float &adder)
 std::ostream& operator<<(std::ostream& os, const Mat& a)
 {
     svf vec = a.piece;
-    std::pair<int, int> shape = a.getShape();
-    for(int i = 0 ; i < shape.first ; i++)
+    std::vector<int> shape = a.getShape();
+    for(int i = 0 ; i < shape.at(0) ; i++)
     {
         int j;
-        for(j = 0 ; j < shape.second - 1 ; j++)
+        for(j = 0 ; j < shape.at(1) - 1 ; j++)
         {
             os << a.piece[i][j] << ",";
         }
         os << a.piece[i][j];
-        if(i != (shape.first - 1))
+        if(i != (shape.at(0) - 1))
             os << std::endl;
     }
     return os;
@@ -178,9 +178,9 @@ std::ostream& operator<<(std::ostream& os, const Mat& a)
 
 Mat Mat::T()
 {
-    std::pair<int, int> shape = this->getShape();
-    int noOfRows = shape.first;
-    int noOfColumns = shape.second;
+    std::vector<int> shape = this->getShape();
+    int noOfRows = shape.at(0);
+    int noOfColumns = shape.at(1);
     
     svf p = svf(noOfColumns, std::vector<float>(noOfRows, 0));
     for(int i = 0 ; i < noOfRows ; i++)
