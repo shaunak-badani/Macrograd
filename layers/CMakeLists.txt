@@ -10,7 +10,7 @@ add_subdirectory(learningrates)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(${TARGET_NAME} LayerUtils.cpp Linear.cpp)
+add_library(${TARGET_NAME} LayerUtils.cpp Linear.cpp MatUtils.cpp)
 
 target_link_libraries(${TARGET_NAME} PRIVATE BuildingBlocks Operators)
 target_include_directories(${TARGET_NAME} PUBLIC 

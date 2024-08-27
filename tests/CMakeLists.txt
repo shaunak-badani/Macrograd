@@ -135,6 +135,15 @@ target_include_directories(${VEC3D_TEST_TARGET_NAME}
 )
 add_test(NAME ${VEC3D_TEST_TARGET_NAME} COMMAND $<TARGET_FILE:${VEC3D_TEST_TARGET_NAME}>)
 
+# MatUtilsTest
 
+set(MATUTILS_TEST_TARGET_NAME MatUtilsTest)
 
-
+add_executable(${MATUTILS_TEST_TARGET_NAME} MatUtilsTest.cpp)
+target_link_libraries(${MATUTILS_TEST_TARGET_NAME} PRIVATE Layers GTest::gtest_main GTest::gmock_main)
+target_include_directories(${MATUTILS_TEST_TARGET_NAME} 
+      PUBLIC 
+      ${PROJECT_SOURCE_DIR}/layers/buildingblocks
+      ${PROJECT_SOURCE_DIR}/layers
+)
+add_test(NAME ${MATUTILS_TEST_TARGET_NAME} COMMAND $<TARGET_FILE:${MATUTILS_TEST_TARGET_NAME}>)
