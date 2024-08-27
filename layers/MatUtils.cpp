@@ -21,7 +21,7 @@ std::shared_ptr<Mat> MatUtils::crossCorrelate(std::shared_ptr<Mat> A, std::share
     {
         for(int j = 0 ; j < resultShape.second ; j++)
         {
-            int val_ij = 0;
+            float val_ij = 0;
 
             for(int u = 0; u < p ; u++)
             {
