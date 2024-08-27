@@ -14,8 +14,8 @@ TEST_P(MatUtilsParameterizedTest, test_cross_correlation)
     svf a = std::get<0>(GetParam());
     svf b = std::get<1>(GetParam());
 
-    std::shared_ptr<Mat> c = MatUtils::crossCorrelate(
-        std::make_shared<Mat>(a), std::make_shared<Mat>(b));
+    Mat c = MatUtils::crossCorrelate(
+        Mat(a), Mat(b));
 
     int m = a.size();
     int n = a[0].size();
@@ -23,12 +23,12 @@ TEST_P(MatUtilsParameterizedTest, test_cross_correlation)
     int p = b.size();
     int q = b[0].size();
 
-    ASSERT_EQ(c->getShape().at(0), m - p + 1);
-    ASSERT_EQ(c->getShape().at(1), n - q + 1);
+    ASSERT_EQ(c.getShape().at(0), m - p + 1);
+    ASSERT_EQ(c.getShape().at(1), n - q + 1);
 
     svf expectedCrossCorrelation = std::get<2>(GetParam());
 
-    c->forEach([=](int i, int j, float value){
+    c.forEach([=](int i, int j, float value){
         EXPECT_FLOAT_EQ(expectedCrossCorrelation[i][j], value);
     });
 }

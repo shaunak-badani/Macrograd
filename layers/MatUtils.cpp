@@ -2,13 +2,13 @@
 #include "Mat.h"
 #include <memory>
 
-std::shared_ptr<Mat> MatUtils::crossCorrelate(std::shared_ptr<Mat> A, std::shared_ptr<Mat> B)
+Mat MatUtils::crossCorrelate(Mat A, Mat B)
 {
-    std::vector<int> aShape = A->getShape();
+    std::vector<int> aShape = A.getShape();
     int m = aShape.at(0);
     int n = aShape.at(1);
 
-    std::vector<int> bShape = B->getShape();
+    std::vector<int> bShape = B.getShape();
 
     int p = bShape.at(0);
     int q = bShape.at(1);
@@ -27,7 +27,7 @@ std::shared_ptr<Mat> MatUtils::crossCorrelate(std::shared_ptr<Mat> A, std::share
             {
                 for(int v = 0 ; v < q ; v++)
                 {
-                    val_ij += A->at(i + u, j + v) * B->at(u, v);
+                    val_ij += A.at(i + u, j + v) * B.at(u, v);
                 }
             }
 
@@ -35,5 +35,5 @@ std::shared_ptr<Mat> MatUtils::crossCorrelate(std::shared_ptr<Mat> A, std::share
         }
     }
 
-    return std::make_shared<Mat>(c);
+    return Mat(c);
 }

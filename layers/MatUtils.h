@@ -7,7 +7,7 @@
 class MatUtils
 {
     public:
-        static std::shared_ptr<Mat> crossCorrelate(std::shared_ptr<Mat> a, std::shared_ptr<Mat> b);
+        static Mat crossCorrelate(Mat a, Mat b);
 };
 
 #endif
