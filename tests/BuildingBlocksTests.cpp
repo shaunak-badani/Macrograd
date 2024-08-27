@@ -99,27 +99,16 @@ TEST_F(NormalBehaviorSetup, Mat_transpose_test)
     Mat A(a);
     Mat C = A.T();
 
-    std::pair<int, int> cShape = C.getShape();
-    std::pair<int, int> aShape = A.getShape();
+    std::vector<int> cShape = C.getShape();
+    std::vector<int> aShape = A.getShape();
     
-    EXPECT_EQ(cShape.first, aShape.second);
-    EXPECT_EQ(cShape.second, aShape.first);
+    EXPECT_EQ(cShape.at(0), aShape.at(1));
+    EXPECT_EQ(cShape.at(1), aShape.at(0));
 
     C.forEach([=](int i, int j, float value){
         EXPECT_EQ(value, a[j][i]);
     });
 
-}
-
-TEST_F(NormalBehaviorSetup, Mat_copyconstructor_test)
-{
-    float newValue =  78.23;
-    Mat A(a);
-    Mat B(A, newValue);
-
-    B.forEach([=](int i, int j, float value) {
-        EXPECT_EQ(value, newValue);
-    });
 }
 
 TEST_F(NormalBehaviorSetup, Minus_Equal_and_Multiplication)

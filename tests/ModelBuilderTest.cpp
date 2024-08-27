@@ -98,7 +98,7 @@ TEST_F(ModelBuilderTest, test_model_train_with_one_epoch)
     std::shared_ptr<Node> loss = model->forward(test_node, test_labels);
 
     std::vector<std::shared_ptr<Node>> params = model->parameters();
-    float initialLoss = loss->data->getPiece()[0][0];
+    float initialLoss = loss->data->at(0, 0);
     model->train(test_node->data, test_labels->data, 0);
     params = model->parameters();
 
@@ -109,7 +109,7 @@ TEST_F(ModelBuilderTest, test_model_train_with_one_epoch)
         });
     }
 
-    float lossAfter = model->forward(test_node, test_labels)->data->getPiece()[0][0];
+    float lossAfter = model->forward(test_node, test_labels)->data->at(0, 0);
 
     EXPECT_LE(lossAfter, initialLoss);
 

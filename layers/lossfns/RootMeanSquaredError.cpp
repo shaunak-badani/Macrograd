@@ -14,7 +14,7 @@ RootMeanSquaredError::RootMeanSquaredError()
 std::shared_ptr<Node> RootMeanSquaredError::operator()(std::shared_ptr<Node> actualValues, 
         std::shared_ptr<Node> expectedValues)
 {
-    int numberOfDataPoints = actualValues->data->getShape().first;
+    int numberOfDataPoints = actualValues->data->getShape().at(0);
 
     return this->squareRootOperator->operate(
         sum(this->squaredOperator->operate(actualValues - expectedValues) / numberOfDataPoints)

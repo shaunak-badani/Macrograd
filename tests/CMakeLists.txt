@@ -123,6 +123,18 @@ target_include_directories(${BROADCAST_TEST_TARGET_NAME}
 )
 add_test(NAME ${BROADCAST_TEST_TARGET_NAME} COMMAND $<TARGET_FILE:${BROADCAST_TEST_TARGET_NAME}>)
 
+# Vec3DTest
+
+set(VEC3D_TEST_TARGET_NAME Vec3DTest)
+
+add_executable(${VEC3D_TEST_TARGET_NAME} Vec3DTest.cpp)
+target_link_libraries(${VEC3D_TEST_TARGET_NAME} PRIVATE BuildingBlocks GTest::gtest_main GTest::gmock_main)
+target_include_directories(${VEC3D_TEST_TARGET_NAME} 
+      PUBLIC 
+      ${PROJECT_SOURCE_DIR}/layers/buildingblocks
+)
+add_test(NAME ${VEC3D_TEST_TARGET_NAME} COMMAND $<TARGET_FILE:${VEC3D_TEST_TARGET_NAME}>)
+
 
 
 

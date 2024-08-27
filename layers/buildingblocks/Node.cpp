@@ -7,7 +7,7 @@
 Node::Node(std::shared_ptr<Mat> paramData, std::unordered_set<std::shared_ptr<Node>> previous)
 {
     this->data = paramData;
-    this->grad = std::make_shared<Mat>(*(paramData.get()), 0.0);
+    this->grad = paramData->mapFunction([=](int i, int j, float value){ return 0; });
     this->previous = previous;
 }
 
@@ -80,9 +80,9 @@ std::shared_ptr<Node> operator-(std::shared_ptr<Node> nodeA, std::shared_ptr<Nod
             throw std::runtime_error("Can't get lock to pointer of Out in subtraction operator!");
 
         std::shared_ptr<Mat> aGrad = std::make_shared<Mat>(*(nOut->grad.get()));
-        std::shared_ptr<Mat> bGrad = std::make_shared<Mat>(nOut->grad->mapFunction([=](int i, int j, float value) {
+        std::shared_ptr<Mat> bGrad = nOut->grad->mapFunction([=](int i, int j, float value) {
             return -1 * value;
-        })->getPiece());
+        });
 
         nB->grad = bGrad;
         nA->grad = aGrad;
@@ -176,8 +176,7 @@ std::shared_ptr<Node> sum(std::shared_ptr<Node> nodeA)
         if(!nOut)
             throw std::runtime_error("Can't get lock to pointer of out in sum operator!");
 
-        float gradientToPropagate = nOut->grad->getPiece()[0][0];
-        svf grad = nA->grad->getPiece();
+        float gradientToPropagate = nOut->grad->at(0, 0);
         *(nA->grad.get()) += gradientToPropagate;
     };
     return out;
