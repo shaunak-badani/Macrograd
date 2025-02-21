@@ -52,6 +52,7 @@ TEST_F(LossFnTest, MeanSquaredError)
     std::shared_ptr<LayerUtils> layerUtils = std::make_shared<LayerUtils>();
     layerUtils->backward(output);
 
+
     svf expectedGradA = { {-18.2}, {7.0}, {-1.8}, {10.2}, {-14.4} };
 
     nodeA->grad->forEach([=](int i, int j, float value){
@@ -79,7 +80,7 @@ TEST_F(LossFnTest, RootMeanSquaredError)
 
     ASSERT_TRUE(abs(expectedLoss - output->data->at(0, 0)) < 1e-3);
 
-    output->grad->assignValue(1.0);
+    // output->grad->assignValue(1.0);
     std::shared_ptr<LayerUtils> layerUtils = std::make_shared<LayerUtils>();
     layerUtils->backward(output);
 

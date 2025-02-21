@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "Linear.h"
 #include "Layer.h"
+#include "LayerUtils.h"
 
 struct LayersTest : public testing::Test
 {
@@ -43,6 +44,23 @@ TEST_F(LayersTest, test_layers_initialized_properly)
 
     // weights and biases
     EXPECT_EQ(params.size(), 2);
+}
+
+TEST_F(LayersTest, test_linear_layer_backpropagation)
+{
+    std::shared_ptr<Node> layerWeights = layer->forward(identityNode);
+
+    std::shared_ptr<LayerUtils> utils = std::make_shared<LayerUtils>();
+
+    utils->backward(layerWeights);
+
+    for(std::shared_ptr<Node> param : layer->getParameters())
+    {
+        std::cout << param.get() << " " << param << std::endl;
+    }
+    std::cout << "Input : " << std::endl;
+    std::cout << identityNode.get() << " " << identityNode << std::endl;
+
 }
 
 

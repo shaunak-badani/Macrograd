@@ -3,12 +3,14 @@
 #include <iostream>
 #include <memory>
 #include <unordered_set>
+#include <cmath>
 
 Node::Node(std::shared_ptr<Mat> paramData, std::unordered_set<std::shared_ptr<Node>> previous)
 {
     this->data = paramData;
     this->grad = paramData->mapFunction([=](int i, int j, float value){ return 0; });
     this->previous = previous;
+    this->backward = [](){};
 }
 
 Node::Node(std::shared_ptr<Mat> paramData) : Node(paramData, std::unordered_set<std::shared_ptr<Node>>()) 
@@ -117,6 +119,9 @@ std::shared_ptr<Node> operator*(std::shared_ptr<Node> nodeA, std::shared_ptr<Nod
         if(!nOut)
             throw std::runtime_error("Can't get lock to pointer of Out in multiplication operator!");
 
+        std::cout << "nOut grad : " << std::endl << *(nOut->grad.get()) << std::endl; 
+        std::cout << "nA T data : " << std::endl << nA->data->T() << std::endl; 
+        std::cout << "nB T data : " << std::endl << nB->data->T() << std::endl; 
         *(nA->grad.get()) += (*(nOut->grad) * (nB->data->T()));
         *(nB->grad.get()) += (nA->data->T() * *(nOut->grad));
     };
@@ -180,4 +185,37 @@ std::shared_ptr<Node> sum(std::shared_ptr<Node> nodeA)
         *(nA->grad.get()) += gradientToPropagate;
     };
     return out;
+}
+
+std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Node>& ptr) {
+    std::shared_ptr<Mat> data = ptr->data;
+    std::vector<int> shape = data->getShape();
+    // std::cout << "Shape: { ";
+
+    // for(int i = 0 ; i < shape.size() ; i++)
+    //     std::cout << shape[i] << ", ";
+    // std::cout << "}" << std::endl;
+
+    int m = shape[0];
+    int n = shape[1];
+
+    // std::cout << "Data: " << std::endl;
+    // for(int i = 0 ; i < m ; i++)
+    // {
+    //     for(int j = 0 ; j < n ; j++)
+    //         std::cout << ptr->data->at(i, j) << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << "----" << std::endl;
+
+    std::cout << "Gradient norm: ";
+    float gradientNorm = 0;
+    for(int i = 0 ; i < m ; i++)
+    {
+        for(int j = 0 ; j < n ; j++)
+            gradientNorm += pow(ptr->grad->at(i, j), 2);
+    }
+    std::cout << gradientNorm << std::endl;
+
+    return os;
 }

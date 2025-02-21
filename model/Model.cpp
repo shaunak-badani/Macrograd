@@ -30,7 +30,9 @@ std::shared_ptr<Node> Model::forward(std::shared_ptr<Node> input, std::shared_pt
     {
         x = layer->forward(x);
     }
-    std::vector<int> outputShape = x->data->getShape();
+
+    std::shared_ptr<Node> output = x;
+    std::vector<int> outputShape = output->data->getShape();
     std::vector<int> labelsShape = traininglabels->data->getShape();
     if(outputShape.at(1) != labelsShape.at(1))
     {
@@ -40,7 +42,7 @@ std::shared_ptr<Node> Model::forward(std::shared_ptr<Node> input, std::shared_pt
     {
         throw std::runtime_error("Number of elements in input and labels does not match!");
     }
-    std::shared_ptr<Node> loss = (this->lossFn.get())->operator()(x, traininglabels);
+    std::shared_ptr<Node> loss = (*this->lossFn.get())(output, traininglabels);
     return loss;
 }
 
