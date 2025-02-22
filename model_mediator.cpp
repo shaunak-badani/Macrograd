@@ -102,6 +102,7 @@ void ModelMediator::run()
     {
         // get inputs
         std::shared_ptr<DataSet> dataSet = dataset_reader->readNextBatch();
+        std::cout << dataSet->getData()->data->getShape().at(0) <<std::endl;
         float loss = model->train(dataSet->getData()->data, dataSet->getLabels()->data, i);
         std::cout << "Loss for epoch " << i << ": " << loss << std::endl;
         this->output_handler->register_scalar(loss);
