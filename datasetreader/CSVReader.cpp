@@ -30,13 +30,8 @@ std::shared_ptr<DataSet> CSVReader::readNextBatch()
     std::string currentDataPoint;
     myfile.seekg(this->filePos);
 
-    // std::cout << "peek : " << (myfile.peek() == EOF) << std::endl;
-    // std::cout << "eof check : " << myfile.eof() << std::endl;
-    // std::cout << "good? : " << myfile.good() << std::endl;
-    
     if(myfile.peek() == EOF)
     {
-        // std::cout << "Resetting..." << std::endl;
         this->filePos = 0;
         myfile.clear();
         myfile.seekg(this->filePos);
@@ -45,7 +40,6 @@ std::shared_ptr<DataSet> CSVReader::readNextBatch()
 
     if(myfile.is_open())
     {
-        // std::cout << "Is good? " << myfile.good() << std::endl;
         for(int bufferedIndex = 0 ; bufferedIndex < this->batch_size && myfile.good() ; bufferedIndex++)
         {
             
