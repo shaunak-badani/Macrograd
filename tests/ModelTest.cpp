@@ -132,23 +132,7 @@ TEST_F(ModelTest, test_model_works_correctly)
     utils->backward(loss);
 
     for(std::shared_ptr<Node> param : model->parameters())
-    {
-        float gradientNorm = 0;
-        std::shared_ptr<Mat> grad = param->grad;
-        std::vector<int> shape = grad->getShape();
-        int m = shape[0];
-        int n = shape[1];
-
-        for(int i = 0 ; i < m ; i++)
-        {
-            for(int j = 0 ; j < n ; j++)
-            {
-                gradientNorm += pow(grad->at(i, j), 2);
-            }
-        }
-
-        EXPECT_GT(abs(gradientNorm), 0.0);
-    }
+        EXPECT_GT(param->grad->norm(), 0.0);
 }
 
 TEST_F(ModelTest, test_gradients_populated_correctly)
@@ -171,11 +155,8 @@ TEST_F(ModelTest, test_gradients_populated_correctly)
     std::shared_ptr<LayerUtils> utils = std::make_shared<LayerUtils>();
     utils->backward(loss);
 
-    std::cout << "Model parameters:" << std::endl;
-
     for(std::shared_ptr<Node> param : model->parameters())
         EXPECT_GT(param->grad->norm(), 0.0);
-    std::cout << std::endl;
 }
 
 
