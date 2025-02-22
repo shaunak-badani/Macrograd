@@ -29,10 +29,11 @@ std::shared_ptr<DataSet> CSVReader::readNextBatch()
     }
     std::string currentDataPoint;
     myfile.seekg(this->filePos);
-    
+
     if(myfile.peek() == EOF)
     {
         this->filePos = 0;
+        myfile.clear();
         myfile.seekg(this->filePos);
     }
 
@@ -43,6 +44,8 @@ std::shared_ptr<DataSet> CSVReader::readNextBatch()
         {
             
             std::getline(myfile, currentDataPoint, ',');
+            if(currentDataPoint.empty())
+                continue;
             csvLabels.push_back(IOUtils::to_float({ currentDataPoint }));
             std::getline(myfile, currentDataPoint, '\n');
 
