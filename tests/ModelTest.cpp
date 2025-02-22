@@ -159,9 +159,6 @@ TEST_F(ModelTest, test_gradients_populated_correctly)
     multiLayers.push_back(std::make_shared<Linear>(10, 15));
     multiLayers.push_back(std::make_shared<Linear>(15, 1));
 
-    // multiLayers.push_back(std::make_shared<Linear>(10, 1));
-
-
     EXPECT_NO_THROW(
         model = std::make_shared<Model>(multiLayers, lossFn, staticLR);
     );
@@ -170,39 +167,14 @@ TEST_F(ModelTest, test_gradients_populated_correctly)
     EXPECT_NO_THROW(
         loss = model->forward(test_node, test_labels)
     );
-    std::cout << "Loss value: " << loss->data->at(0, 0) << std::endl;
-
-    // Asserting loss is a scalar
-    std::vector<int> lossShape = loss->data->getShape();
-    // EXPECT_EQ(lossShape.at(0), 1);
-    // EXPECT_EQ(lossShape.at(1), 1);
 
     std::shared_ptr<LayerUtils> utils = std::make_shared<LayerUtils>();
     utils->backward(loss);
 
-    int i = 0;
-
     std::cout << "Model parameters:" << std::endl;
 
     for(std::shared_ptr<Node> param : model->parameters())
-    {
-        float gradientNorm = 0;
-        std::shared_ptr<Mat> grad = param->grad;
-        std::vector<int> shape = grad->getShape();
-        int m = shape[0];
-        int n = shape[1];
-        std::cout << param.get() << "  :: ";
-
-        for(int i = 0 ; i < m ; i++)
-        {
-            for(int j = 0 ; j < n ; j++)
-            {
-                gradientNorm += pow(grad->at(i, j), 2);
-            }
-        }
-
-        EXPECT_GT(abs(gradientNorm), 0.0);
-    }
+        EXPECT_GT(param->grad->norm(), 0.0);
     std::cout << std::endl;
 }
 

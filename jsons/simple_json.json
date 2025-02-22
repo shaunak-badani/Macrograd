@@ -1,5 +1,5 @@
 {
-    "num_epochs": 100,
+    "num_epochs": 10000,
     "layers":[
         {
             "type": "linear",

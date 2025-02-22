@@ -1,5 +1,5 @@
 {
-    "num_epochs": 2,
+    "num_epochs": 100,
     "layers":[
         {
             "type": "linear",
@@ -14,7 +14,7 @@
     ],
     "learning_rate": {
         "type": "simple",
-        "value": 0.001
+        "value": 0.0001
     },
     "loss_fn": "root_mean_squared",
     "dataset_reader": "csv_reader",
