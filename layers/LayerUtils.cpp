@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 
+
 void LayerUtils::buildTopoGraph(std::shared_ptr<Node> root)
 {
     if(this->visited.contains(root))
@@ -16,7 +17,7 @@ void LayerUtils::buildTopoGraph(std::shared_ptr<Node> root)
     {
         buildTopoGraph(child);
     }
-
+    
     this->visited.insert(root);
     this->orderedNodes.push_back(root);
 }

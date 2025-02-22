@@ -42,10 +42,7 @@ Linear::Linear(int input_size, int output_size)
 
 std::shared_ptr<Node> Linear::forward(std::shared_ptr<Node> input)
 {
-    std::shared_ptr<Node> intermediate = input * this->weights;
-    std::cout << "This weight data: " << *(this->weights->data.get()) << std::endl;
-    std::cout << "This weight T data: " << this->weights->data->T() << std::endl;
-    return std::shared_ptr<Broadcast::Add>()->calculate(intermediate, biases);
+    return std::shared_ptr<Broadcast::Add>()->calculate(input * this->weights, biases);
 }
 
 std::vector<std::shared_ptr<Node>> Linear::getParameters()

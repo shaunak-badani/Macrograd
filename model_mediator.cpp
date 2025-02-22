@@ -50,7 +50,6 @@ void from_json(const nlohmann::json& j, ModelMediator& modelMediator)
 
         if(layer_type == "linear")
         {
-            std::cout << json_layer["input_size"] << " " << json_layer["output_size"] << std::endl;
             layer = std::make_shared<Linear>(json_layer["input_size"], json_layer["output_size"]);
         }
         else
