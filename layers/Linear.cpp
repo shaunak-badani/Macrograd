@@ -13,9 +13,9 @@ Linear::Linear(int input_size, int output_size)
 {
     svf p = svf(input_size, std::vector<float>(output_size, 1));
     std::mt19937 rng(std::random_device{}());
-    float k = 1 / input_size;
+    float k = 1 / (input_size * 1.0f);
     float range = sqrt(k);
-    std::uniform_real_distribution<double> distribution(-k, k);
+    std::uniform_real_distribution<double> distribution(-range, range);
 
     for(int rowNo = 0 ; rowNo < input_size ; rowNo++)
     {

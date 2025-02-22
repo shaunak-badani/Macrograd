@@ -3,6 +3,8 @@
 #include "Linear.h"
 #include "MeanSquaredError.h"
 #include "StaticLR.h"
+#include <cmath>
+
 
 struct ModelTest : testing::Test
 {
@@ -18,18 +20,19 @@ struct ModelTest : testing::Test
     std::shared_ptr<Node> test_labels;
 
     std::shared_ptr<LearningRate> staticLR;
+    int batchSize = 9;
 
     void SetUp() override
     {
         layers.push_back(std::make_shared<Linear>(10, 1));
         lossFn = std::make_shared<MeanSquaredError>();
 
-        test_vec = svf(5, std::vector<float>(10, 9.1));
+        test_vec = svf(batchSize, std::vector<float>(10, 9.1));
         test_node = std::make_shared<Node>(
                 std::make_shared<Mat>(test_vec)
             );
 
-        test_labels_vec = svf(5, std::vector<float>(1, 1));
+        test_labels_vec = svf(batchSize, std::vector<float>(1, 1));
         test_labels = std::make_shared<Node>(
                 std::make_shared<Mat>(test_labels_vec)
             );
@@ -124,7 +127,38 @@ TEST_F(ModelTest, test_model_works_correctly)
     std::vector<int> lossShape = loss->data->getShape();
     EXPECT_EQ(lossShape.at(0), 1);
     EXPECT_EQ(lossShape.at(1), 1);
+
+    std::shared_ptr<LayerUtils> utils = std::make_shared<LayerUtils>();
+    utils->backward(loss);
+
+    for(std::shared_ptr<Node> param : model->parameters())
+        EXPECT_GT(param->grad->norm(), 0.0);
 }
+
+TEST_F(ModelTest, test_gradients_populated_correctly)
+{
+    std::shared_ptr<Model> model;
+
+    std::vector<std::shared_ptr<Layer>> multiLayers;
+    multiLayers.push_back(std::make_shared<Linear>(10, 15));
+    multiLayers.push_back(std::make_shared<Linear>(15, 1));
+
+    EXPECT_NO_THROW(
+        model = std::make_shared<Model>(multiLayers, lossFn, staticLR);
+    );
+
+    std::shared_ptr<Node> loss;
+    EXPECT_NO_THROW(
+        loss = model->forward(test_node, test_labels)
+    );
+
+    std::shared_ptr<LayerUtils> utils = std::make_shared<LayerUtils>();
+    utils->backward(loss);
+
+    for(std::shared_ptr<Node> param : model->parameters())
+        EXPECT_GT(param->grad->norm(), 0.0);
+}
+
 
 int main(int argc, char** argv)
 {

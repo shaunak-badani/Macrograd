@@ -28,9 +28,6 @@ TEST_F(Vec3DTest, test_initialized_correctly)
 
     EXPECT_THAT(p, testing::ElementsAre(2, 3, 3));
 
-    EXPECT_THROW(A->getMatAt(2), std::runtime_error);
-
-    EXPECT_NO_THROW(A->getMatAt(1));
 }
 
 

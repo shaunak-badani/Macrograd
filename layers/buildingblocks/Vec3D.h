@@ -6,14 +6,12 @@
 class Vec3D : public Vec
 {
     private:
-        std::vector<std::shared_ptr<Mat>> vec;
+        std::vector<svf> vec;
 
     public:
         Vec3D(std::vector<svf> piece);
 
         std::vector<int> getShape() const override;
-
-        std::shared_ptr<Mat> getMatAt(int i);
 
 };
 

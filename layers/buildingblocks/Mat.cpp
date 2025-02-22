@@ -2,6 +2,7 @@
 #include <functional>
 #include <iostream>
 #include <memory>
+#include <cmath>
 
 std::vector<int> Mat::getShape() const
 {
@@ -212,4 +213,19 @@ std::shared_ptr<Mat> operator/(std::shared_ptr<Mat> input, float value)
     return input->mapFunction([=](int i, int j, float p){
         return p / value;
     });
+}
+
+float Mat::norm()
+{
+    std::vector<int> shape = this->getShape();
+    int noOfRows = shape.at(0);
+    int noOfColumns = shape.at(1);
+
+    float matNorm = 0;
+    for(int i = 0 ; i < noOfRows ; i++)
+        for(int j = 0 ; j < noOfColumns ; j++)
+            matNorm += pow(this->piece[i][j], 2);
+        
+    return matNorm;
+    
 }

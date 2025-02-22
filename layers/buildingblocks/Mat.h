@@ -45,6 +45,8 @@ class Mat : public Vec
         // assigns the value passed to all elements of the matrix
         void assignValue(float value);
 
+        float norm();
+
 };
 
 #endif

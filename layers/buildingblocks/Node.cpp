@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <unordered_set>
+#include <cmath>
 
 Node::Node(std::shared_ptr<Mat> paramData, std::unordered_set<std::shared_ptr<Node>> previous)
 {
@@ -180,4 +181,18 @@ std::shared_ptr<Node> sum(std::shared_ptr<Node> nodeA)
         *(nA->grad.get()) += gradientToPropagate;
     };
     return out;
+}
+
+// For debugging purposes
+std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Node>& ptr) {
+    std::shared_ptr<Mat> data = ptr->data;
+    std::vector<int> shape = data->getShape();
+
+    int m = shape[0];
+    int n = shape[1];
+
+    std::cout << "Gradient norm: ";
+    std::cout << ptr->grad->norm() << std::endl;
+
+    return os;
 }
