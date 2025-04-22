@@ -1,1 +1,1 @@
-add_library(BuildingBlocks Mat.cpp Node.cpp Vec3D.cpp)
+add_library(BuildingBlocks Mat.cpp Node.cpp Vec3D.cpp Vec4D.cpp Node4D.cpp)

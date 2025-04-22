@@ -41,3 +41,16 @@ add_subdirectory(ioutils)
 add_subdirectory(tests)
 add_subdirectory(layers)
 add_subdirectory(model)
+
+
+# vgg code
+add_executable(VGG vgg.cpp)
+target_link_libraries(VGG PUBLIC DataSetReader Model LossFns BuildingBlocks)
+
+target_include_directories(VGG PUBLIC 
+            "${PROJECT_SOURCE_DIR}/datasetreader"
+            ${PROJECT_SOURCE_DIR}/model
+            ${PROJECT_SOURCE_DIR}/layers/lossfn
+            ${PROJECT_SOURCE_DIR}/layers/operators
+            "${PROJECT_BINARY_DIR}/datasetreader" # for datasets path config header file
+)
